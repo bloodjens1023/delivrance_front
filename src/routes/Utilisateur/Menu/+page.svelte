@@ -86,16 +86,15 @@
     >
       <Chargement />
     </center>
-    <Footer />
+    <FooterAttenteUtilisateur />
   {:then data}
     {#if users != undefined}
       <HeaderAttente men="active" />
       <br />
       <br />
       <br />
-      <div style="padding: 0px 30px 0px 100px;">
-        <h1>Vos informations</h1>
-        <hr />
+      <div style="display: flex; align-items: center; justify-content: center;">
+        <p style="font-size:2.3em; font-weight: bold;">Vos informations</p>
       </div>
       <br />
       <br />
