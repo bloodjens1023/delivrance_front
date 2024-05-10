@@ -143,4 +143,16 @@
       background-position: left;
     }
   }
+
+  @media only screen and (max-width: 768px) {
+    .loader::before {
+      content: "Aucun Demande identifier";
+      line-height: 1em;
+      color: #0000;
+      background: inherit;
+      background-image: transparent;
+      -webkit-background-clip: text;
+      background-clip: text;
+    }
+  }
 </style>
