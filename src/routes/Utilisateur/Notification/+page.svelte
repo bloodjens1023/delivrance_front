@@ -58,7 +58,7 @@
     style="width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;"
   >
     <div
-      style="width: 90%; height: 100%; border: 4px solid black; padding: 30px; border-radius: 0px 0px 30px 30px;"
+      style="width: 90%; height: 100%; border: 3px solid black; padding: 30px; border-radius: 0px 0px 30px 30px;"
     >
       <h1 style="font-weight: bold;">
         <svg
@@ -84,11 +84,13 @@
         {/each}
       {/await}
       <br />
-      <section class="dots-container">
-        <div class="dot"></div>
-        <div class="dot"></div>
-        <div class="dot"></div>
-      </section>
+      <div style="display: flex; align-items: end; justify-content: end;">
+        <section class="dots-container">
+          <div class="dot"></div>
+          <div class="dot"></div>
+          <div class="dot"></div>
+        </section>
+      </div>
     </div>
   </div>
   <br /><br /><br /><br /><br />
@@ -102,6 +104,7 @@
     justify-content: center;
     height: 100%;
     width: 100%;
+    margin-top: 100px;
   }
 
   .dot {

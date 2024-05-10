@@ -23,16 +23,6 @@
       chef = true;
     }
   } catch (error) {}
-  try {
-    let id = sessionStorage.getItem("admin");
-
-    if (id == null || id == undefined || id == "") {
-      aucun = true;
-    } else {
-      admin = true;
-      console.log("admin");
-    }
-  } catch (error) {}
 </script>
 
 <div class="center">
@@ -61,17 +51,7 @@
   <div class="text">Oops. La page ou tu navige n'existe pas.</div>
   <br />
   <br />
-  {#if chef}
-    <a class="btn btn-dark" href="/Chef/AccueilAdmin">Retourner a l'accueil</a>
-  {/if}
-  {#if user}
-    <a class="btn btn-dark" href="/Utilisateur/Attente">Retourner a l'accueil</a
-    >
-  {/if}
-
-  {#if aucun}
-    <a class="btn btn-dark" href="/">Retourner a l'accueil</a>
-  {/if}
+  <a class="btn btn-dark" href="/">Retourner a l'accueil</a>
 </div>
 
 <style>

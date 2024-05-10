@@ -152,7 +152,9 @@
         <br />
         <br />
         <br />
-        <div style="width: 50%;">
+        <div
+          style="width: 100%; display: flex; align-items: center; justify-content: center;"
+        >
           <Rate simple={true} />
         </div>
         <br />

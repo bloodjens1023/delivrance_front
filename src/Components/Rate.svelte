@@ -163,7 +163,6 @@
   .contenu {
     border: 3px solid black;
     width: 90%;
-    padding: 40px;
   }
   h1 {
     font-size: 2em;
@@ -260,6 +259,11 @@
     60% {
       transform: scale(1.2);
       fill: var(--fill);
+    }
+  }
+  @media only screen and (max-width: 768px) {
+    h1 {
+      font-size: 2em;
     }
   }
 </style>

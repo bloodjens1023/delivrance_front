@@ -66,50 +66,54 @@
 <div>
   <HeaderAttente dem="active" />
 
-  {#if users == undefined}
-    <Erreur />
-  {:else}
-    <br /><br /><br />
-    {#if post["etatDocument"] == "encours"}
-      {#if post["typeDocument"] == "duplicatatUse"}
-        <DupliUse donne={post} user={users} />
-        <br /><br /><br /><br /><br />
-      {/if}
-      {#if post["typeDocument"] == "duplicatatPerte"}
-        <DupliPerte donne={post} user={users} />
-        <br /><br /><br /><br /><br />
-      {/if}
+  {#await getPosts()}
+    <Chargement />
+  {:then dons}
+    {#if users == undefined}
+      <Erreur />
+    {:else}
+      <br /><br /><br />
+      {#if post["etatDocument"] == "encours"}
+        {#if post["typeDocument"] == "duplicatatUse"}
+          <DupliUse donne={post} user={users} />
+          <br /><br /><br /><br /><br />
+        {/if}
+        {#if post["typeDocument"] == "duplicatatPerte"}
+          <DupliPerte donne={post} user={users} />
+          <br /><br /><br /><br /><br />
+        {/if}
 
-      {#if post["typeDocument"] == "primata"}
-        <Prima donne={post} user={users} />
-        <br /><br /><br /><br /><br />
+        {#if post["typeDocument"] == "primata"}
+          <Prima donne={post} user={users} />
+          <br /><br /><br /><br /><br />
+        {/if}
+      {/if}
+      {#if post["etatDocument"] == "accepter"}
+        <ResultatDemande donne={post} resultat={"accepter"} user={users} />
+      {/if}
+      {#if post["etatDocument"] == "refuser"}
+        <ResultatDemande donne={post} resultat="refuser" user={users} />
+      {/if}
+      {#if post["donne"] == "aucun"}
+        <center
+          style="height: 70vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap:30px"
+        >
+          <div class="loader"></div>
+          <div class="load"><h1>Aucun demande identifier</h1></div>
+          <br />
+          <Motion
+            let:motion
+            whileHover={{ scale: 1.2 }}
+            whileTap={{ scale: 1.1 }}
+          >
+            <a class="btn btn-success" href="/Utilisateur/Step" use:motion
+              >envoyer un demande</a
+            >
+          </Motion>
+        </center>
       {/if}
     {/if}
-    {#if post["etatDocument"] == "accepter"}
-      <ResultatDemande donne={post} resultat={"accepter"} user={users} />
-    {/if}
-    {#if post["etatDocument"] == "refuser"}
-      <ResultatDemande donne={post} resultat="refuser" user={users} />
-    {/if}
-    {#if post["donne"] == "aucun"}
-      <center
-        style="height: 70vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap:30px"
-      >
-        <div class="loader"></div>
-        <div class="load"><h1>Aucun demande identifier</h1></div>
-        <br />
-        <Motion
-          let:motion
-          whileHover={{ scale: 1.2 }}
-          whileTap={{ scale: 1.1 }}
-        >
-          <a class="btn btn-success" href="/Utilisateur/Step" use:motion
-            >envoyer un demande</a
-          >
-        </Motion>
-      </center>
-    {/if}
-  {/if}
+  {/await}
 
   <FooterAttenteUtilisateur />
 </div>

@@ -19,8 +19,9 @@
       const data = await response.json();
       users = data.data; // Supposons que 'data' est le nom de la clé qui contient les Utilidateur dans la réponse JSON
       filtrer = users;
+      console.log(filtrer);
     } catch (error) {
-      console.error("Erreur lors de la récupération des Utilisateur:", error);
+      console.error("Erreur lors de la récupération des Utilisateurs:", error);
     }
   }
 
@@ -68,6 +69,13 @@
       />
       <br /><br /><br />
     {/each}
+    {#if filtrer.length == 0}
+      <div
+        style="height: 50vh; display: flex; align-items: center; justify-content: center;"
+      >
+        <h1>Aucun nouveau disponible</h1>
+      </div>
+    {/if}
   </div>
   <br /><br /><br /><br /><br />
   <FooterAttenteUtilisateur />

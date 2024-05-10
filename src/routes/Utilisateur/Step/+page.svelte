@@ -91,7 +91,7 @@
       <a
         href="/Utilisateur/Attente"
         use:motion
-        style="position: absolute; right: 40px; bottom:30px;text-decoration: underline;"
+        style="position: absolute; left: 10px; bottom:30px;text-decoration: underline;"
         >Me demander plus tard</a
       >
     </Motion>
