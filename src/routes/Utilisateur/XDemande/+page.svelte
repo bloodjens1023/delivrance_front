@@ -96,6 +96,7 @@
         style="height: 70vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap:30px"
       >
         <div class="loader"></div>
+        <div class="load"><h1>Aucun demande identifier</h1></div>
         <br />
         <Motion
           let:motion
@@ -137,6 +138,9 @@
     -webkit-background-clip: text;
     background-clip: text;
   }
+  .load {
+    display: none;
+  }
 
   @keyframes l24 {
     100% {
@@ -145,14 +149,11 @@
   }
 
   @media only screen and (max-width: 768px) {
-    .loader::before {
-      content: "Aucun Demande identifier";
-      line-height: 1em;
-      color: #0000;
-      background: inherit;
-      background-image: transparent;
-      -webkit-background-clip: text;
-      background-clip: text;
+    .loader {
+      display: none;
+    }
+    .load {
+      display: block;
     }
   }
 </style>
