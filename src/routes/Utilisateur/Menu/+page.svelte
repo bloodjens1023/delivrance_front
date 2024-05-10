@@ -13,12 +13,8 @@
   import Rate from "../../../Components/Rate.svelte";
 
   function filter(a) {
-    console.log(
-      "https://www.pythonanywhere.com/user/bloodjens/files/home/bloodjens/" + a
-    );
-    return (
-      "https://www.pythonanywhere.com/user/bloodjens/files/home/bloodjens/" + a
-    );
+    console.log("https://bloodjens.pythonanywhere.com/" + a);
+    return "https://bloodjens.pythonanywhere.com/" + a;
   }
   const datass = {
     labels: ["inscrit", "non inscrit"],

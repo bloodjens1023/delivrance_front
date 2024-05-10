@@ -8,9 +8,7 @@
   export let user = "";
 
   function filter(a) {
-    return (
-      "https://www.pythonanywhere.com/user/bloodjens/files/home/bloodjens/" + a
-    );
+    return "https://bloodjens.pythonanywhere.com/" + a;
   }
   const getPosts = async () => {
     const res = await fetch(

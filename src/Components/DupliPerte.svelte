@@ -6,9 +6,7 @@
   export let donne = [];
 
   function filter(a) {
-    return (
-      "https://www.pythonanywhere.com/user/bloodjens/files/home/bloodjens/" + a
-    );
+    return "https://bloodjens.pythonanywhere.com/" + a;
   }
   export let user = "";
   const getPosts = async () => {

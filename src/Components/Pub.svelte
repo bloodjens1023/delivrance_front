@@ -14,9 +14,7 @@
   let modifier = false;
 
   function filter(a) {
-    return (
-      "https://www.pythonanywhere.com/user/bloodjens/files/home/bloodjens/" + a
-    );
+    return "https://bloodjens.pythonanywhere.com/" + a;
   }
   const handleSubmit = async (event) => {
     event.preventDefault();

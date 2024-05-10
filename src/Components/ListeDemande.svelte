@@ -5,9 +5,7 @@
   import Modal from "./Modal.svelte";
 
   function filter(a) {
-    return (
-      "https://www.pythonanywhere.com/user/bloodjens/files/home/bloodjens/" + a
-    );
+    return "https://bloodjens.pythonanywhere.com/" + a;
   }
   let donne = {
     un: "",
