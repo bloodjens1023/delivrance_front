@@ -6,6 +6,7 @@
   import HeaderAttente from "../../../Components/HeaderAttente.svelte";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
+  import Chargement from "../../../Components/Chargement.svelte";
 
   let post = [];
   let users = "";
@@ -164,7 +165,7 @@
   <br />
 
   {#await getPosts()}
-    <p>loading</p>
+    <Chargement />
   {:then data}
     <form
       style="display: flex; align-items: center; justify-content: center; flex-direction: column;"

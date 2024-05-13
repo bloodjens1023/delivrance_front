@@ -56,7 +56,7 @@
             on:click={() => {
               decision = 0;
               current = 1;
-            }}>Demande de CNI</button
+            }}>Primata</button
           ></Motion
         >
       </div>
@@ -69,7 +69,7 @@
             on:click={() => {
               decision = 1;
               current = "1";
-            }}>Mon CNI est usée</button
+            }}>Duplicatat d'usure</button
           >
         </Motion>
       </div>
@@ -82,7 +82,7 @@
             on:click={() => {
               decision = 2;
               current = "1";
-            }}>J'ai perdu mon CNI</button
+            }}>Duplicatat perte</button
           ></Motion
         >
       </div>

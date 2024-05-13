@@ -12,6 +12,7 @@
   import { onMount } from "svelte";
   import FormulaireDupliPerte from "../../../Components/FormulaireDupliPerte.svelte";
   import { goto } from "$app/navigation";
+  import Chargement from "../../../Components/Chargement.svelte";
 
   let post = [];
 
@@ -73,7 +74,7 @@
     <h2 style="margin: 50px 0 0 100px">Remplissez les formulaires</h2>
 
     {#await getPosts()}
-      <p>loading</p>
+      <Chargement />
     {:then data}
       {#if data["typeDocument"] == "primata"}
         <Formulaire
