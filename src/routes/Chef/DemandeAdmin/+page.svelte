@@ -90,7 +90,6 @@
       if (id == null || id == undefined || id == "") {
         goto("/Error");
       } else {
-        fetchDemande();
       }
     } catch (error) {
       goto("/Error");
@@ -102,10 +101,9 @@
   <HeaderAttenteAdmin dem="active" />
   <br /><br />
 
-  {#if loading}
+  {#await fetchDemande()}
     <Chargement />
-  {/if}
-  {#if !loading}
+  {:then ds}
     <div
       style="width: 100%; display:flex;align-items: center; justify-content: center;flex-direction: column;"
     >
@@ -141,7 +139,8 @@
         {/if}
       </div>
     </div>
-  {/if}
+  {/await}
+
   <br /><br /><br /><br /><br />
   <FooterAttenteAdmin />
 </div>
