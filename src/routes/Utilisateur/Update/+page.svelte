@@ -7,6 +7,8 @@
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
   import Chargement from "../../../Components/Chargement.svelte";
+  import FooterAttenteSuperAdmin from "../../../Components/FooterAttenteSuperAdmin.svelte";
+  import ChargementConnect from "../../../Components/ChargementConnect.svelte";
 
   let post = [];
   let users = "";
@@ -52,6 +54,7 @@
     formdata.append("email", donne.email);
 
     let response;
+    loads = true;
     try {
       let use = sessionStorage.getItem("identifiant");
       response = await fetch(
@@ -61,8 +64,6 @@
           body: formdata,
         }
       );
-
-      loads = true;
 
       datas = await response.json();
       const message = datas.message;
@@ -167,13 +168,11 @@
   {#await getPosts()}
     <Chargement />
   {:then data}
-    <form
-      style="display: flex; align-items: center; justify-content: center; flex-direction: column;"
-    >
+    <form class="forms">
       <div
         style="display: flex; align-items: center; justify-content: center; flex-direction: column;"
       >
-        <div class="info" style="width: 100%; padding: 100px;">
+        <div class="info">
           <center> <h2>Information Personnel</h2></center>
           <br /><br />
           <div class="prev">
@@ -304,26 +303,26 @@
             <!-- fin checkbox -->
           </div>
           <br />
-          <div class="bones" style="width: 400px;">
+          <div class="bones" style="width: 100%;">
             {#if loads}
-              <div class="three-body">
-                <div class="three-body__dot"></div>
-                <div class="three-body__dot"></div>
-                <div class="three-body__dot"></div>
-              </div>
+              <center>
+                <ChargementConnect />
+              </center>
             {/if}
             {#if !loads}
-              <button
-                class="btn btn-dark"
-                type="submit"
-                style="height:50px; width:200px; margin-right: 20px;"
-                on:click={handleSubmit}>Enregistrer</button
-              >
-              <a
-                class="btn btn-outline-danger"
-                style="height:50px; width:200px; margin-right: 20px;"
-                href="/Utilisateur/Menu">Annuler</a
-              >
+              <center>
+                <button
+                  class="btn btn-dark"
+                  type="submit"
+                  style="height:50px; width:200px; margin-right: 20px; margin-top:10px"
+                  on:click={handleSubmit}>Enregistrer</button
+                >
+                <a
+                  class="btn btn-outline-danger"
+                  style="height:50px; width:200px; margin-right: 20px; margin-top:10px"
+                  href="/Utilisateur/Menu">Annuler</a
+                >
+              </center>
             {/if}
           </div>
         </div>
@@ -333,111 +332,15 @@
       </div>
     </form>
   {/await}
-  <Footer />
+  <FooterAttenteSuperAdmin />
 </div>
 
 <style>
-  .three-body {
-    --uib-size: 35px;
-    --uib-speed: 0.8s;
-    --uib-color: #000000;
-    position: relative;
-    display: inline-block;
-    height: var(--uib-size);
-    width: var(--uib-size);
-    animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
-  }
-
-  .three-body__dot {
-    position: absolute;
-    height: 100%;
-    width: 30%;
-  }
-
-  .three-body__dot:after {
-    content: "";
-    position: absolute;
-    height: 0%;
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: var(--uib-color);
-    border-radius: 50%;
-  }
-
-  .three-body__dot:nth-child(1) {
-    bottom: 5%;
-    left: 0;
-    transform: rotate(60deg);
-    transform-origin: 50% 85%;
-  }
-
-  .three-body__dot:nth-child(1)::after {
-    bottom: 0;
-    left: 0;
-    animation: wobble1 var(--uib-speed) infinite ease-in-out;
-    animation-delay: calc(var(--uib-speed) * -0.3);
-  }
-
-  .three-body__dot:nth-child(2) {
-    bottom: 5%;
-    right: 0;
-    transform: rotate(-60deg);
-    transform-origin: 50% 85%;
-  }
-
-  .three-body__dot:nth-child(2)::after {
-    bottom: 0;
-    left: 0;
-    animation: wobble1 var(--uib-speed) infinite calc(var(--uib-speed) * -0.15)
-      ease-in-out;
-  }
-
-  .three-body__dot:nth-child(3) {
-    bottom: -5%;
-    left: 0;
-    transform: translateX(116.666%);
-  }
-
-  .three-body__dot:nth-child(3)::after {
-    top: 0;
-    left: 0;
-    animation: wobble2 var(--uib-speed) infinite ease-in-out;
-  }
-
-  @keyframes spin78236 {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes wobble1 {
-    0%,
-    100% {
-      transform: translateY(0%) scale(1);
-      opacity: 1;
-    }
-
-    50% {
-      transform: translateY(-66%) scale(0.65);
-      opacity: 0.8;
-    }
-  }
-
-  @keyframes wobble2 {
-    0%,
-    100% {
-      transform: translateY(0%) scale(1);
-      opacity: 1;
-    }
-
-    50% {
-      transform: translateY(66%) scale(0.65);
-      opacity: 0.8;
-    }
+  .forms {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
   }
   .inputBox {
     position: relative;
@@ -479,19 +382,17 @@
     font-size: 2rem;
     font-weight: bold;
   }
-  p {
-    font-size: 1.4em;
-  }
   h2 {
     font-size: 1.7rem;
     font-weight: bold;
     text-decoration: underline;
   }
   .info {
-    width: 90%;
+    width: 700px;
     border: 3px solid black;
     border-radius: 3px 3px 20px 20px;
-    padding: 30px 10px 40px 30px;
+    padding-top: 30px;
+    padding-bottom: 30px;
   }
   .checkbox-wrapper input[type="checkbox"] {
     display: none;
@@ -542,11 +443,11 @@
   }
 
   @media only screen and (max-width: 768px) {
-    p {
-      font-size: 1em;
-    }
     h1 {
       font-size: 1.7rem;
+    }
+    .info {
+      width: 90%;
     }
     .prev {
       flex-direction: column;

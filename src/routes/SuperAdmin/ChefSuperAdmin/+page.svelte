@@ -4,12 +4,7 @@
   import HeaderAttenteSuperAdmin from "../../../Components/HeaderAttenteSuperAdmin.svelte";
   import { goto } from "$app/navigation";
   import FooterAttenteSuperAdmin from "../../../Components/FooterAttenteSuperAdmin.svelte";
-  import Chargement from "../../../Components/Chargement.svelte";
 
-  let loading = true;
-  setTimeout(() => {
-    loading = false;
-  }, 1500);
   onMount(() => {
     try {
       let id = sessionStorage.getItem("admin");
@@ -23,18 +18,14 @@
   });
 </script>
 
+<title>Chef</title>
 <div>
   <HeaderAttenteSuperAdmin chef="active" />
   <br /><br />
   <div
     style="width: 100%; display:flex;align-items: center; justify-content: center;flex-direction: column;"
   >
-    {#if loading}
-      <Chargement />
-    {/if}
-    {#if !loading}
-      <ChefListe />
-    {/if}
+    <ChefListe />
   </div>
 
   <br /><br /><br /><br /><br />

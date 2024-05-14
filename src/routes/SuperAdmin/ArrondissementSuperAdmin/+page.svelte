@@ -4,7 +4,6 @@
   import HeaderAttenteSuperAdmin from "../../../Components/HeaderAttenteSuperAdmin.svelte";
   import { goto } from "$app/navigation";
   import FooterAttenteSuperAdmin from "../../../Components/FooterAttenteSuperAdmin.svelte";
-  import Chargement from "../../../Components/Chargement.svelte";
   import DistrictListe from "../../../Components/DistrictListe.svelte";
   import RegiontListe from "../../../Components/RegiontListe.svelte";
 
@@ -12,9 +11,6 @@
   let region = true;
   let district = false;
   let arrond = false;
-  setTimeout(() => {
-    loading = false;
-  }, 1500);
   onMount(() => {
     try {
       let id = sessionStorage.getItem("admin");
@@ -28,67 +24,63 @@
   });
 </script>
 
+<title>Localisation</title>
 <div>
   <HeaderAttenteSuperAdmin arr="active" />
   <br /><br />
   <div
     style="width: 100%; display:flex;align-items: center; justify-content: center;flex-direction: column;"
   >
-    {#if loading}
-      <Chargement />
+    <center>
+      <div class="radio-inputs">
+        <label class="radio">
+          <input
+            type="radio"
+            name="radio"
+            checked
+            on:click={() => {
+              region = true;
+              district = false;
+              arrond = false;
+            }}
+          />
+          <span class="name">Région</span>
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            name="radio"
+            on:click={() => {
+              region = false;
+              district = true;
+              arrond = false;
+            }}
+          />
+          <span class="name">District</span>
+        </label>
+        <label class="radio">
+          <input
+            type="radio"
+            name="radio"
+            on:click={() => {
+              region = false;
+              district = false;
+              arrond = true;
+            }}
+          />
+          <span class="name">Arrondissement</span>
+        </label>
+      </div>
+    </center>
+    <br /><br /><br />
+    {#if arrond}
+      <ArrondListe />
     {/if}
-    {#if !loading}
-      <center>
-        <div class="radio-inputs">
-          <label class="radio">
-            <input
-              type="radio"
-              name="radio"
-              checked
-              on:click={() => {
-                region = true;
-                district = false;
-                arrond = false;
-              }}
-            />
-            <span class="name">Région</span>
-          </label>
-          <label class="radio">
-            <input
-              type="radio"
-              name="radio"
-              on:click={() => {
-                region = false;
-                district = true;
-                arrond = false;
-              }}
-            />
-            <span class="name">District</span>
-          </label>
-          <label class="radio">
-            <input
-              type="radio"
-              name="radio"
-              on:click={() => {
-                region = false;
-                district = false;
-                arrond = true;
-              }}
-            />
-            <span class="name">Arrondissement</span>
-          </label>
-        </div>
-      </center>
-      <br /><br /><br />
-      {#if arrond}
-        <ArrondListe />
-      {/if}
-      {#if region}
-        <RegiontListe />
-      {/if}
-      {#if district}
-        <DistrictListe />
-      {/if}
+    {#if region}
+      <RegiontListe />
+    {/if}
+    {#if district}
+      <DistrictListe />
     {/if}
   </div>
 

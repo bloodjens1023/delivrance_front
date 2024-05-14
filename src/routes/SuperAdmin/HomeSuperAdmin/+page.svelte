@@ -30,12 +30,13 @@
   let stat = true;
 </script>
 
+<title>Accueil</title>
 <div>
   <HeaderAttenteSuperAdmin acc="active" />
   <br /><br />
   {#if !loads}
     <div
-      style="width: 100%; display:flex;align-items: center; justify-content: center;flex-direction: column;"
+      style="display: flex; align-items: center; justify-content: center; flex-direction: column; width: 100%"
     >
       <div class="stat">
         {#if stat}

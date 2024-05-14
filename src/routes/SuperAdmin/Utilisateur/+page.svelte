@@ -6,11 +6,6 @@
   import FooterAttenteSuperAdmin from "../../../Components/FooterAttenteSuperAdmin.svelte";
   import Chargement from "../../../Components/Chargement.svelte";
 
-  let loads = true;
-  setTimeout(() => {
-    loads = false;
-  }, 1000);
-
   onMount(() => {
     try {
       let id = sessionStorage.getItem("admin");
@@ -30,12 +25,7 @@
   <div
     style="width: 100%; display:flex;align-items: center; justify-content: center;flex-direction: column;"
   >
-    {#if loads}
-      <Chargement />
-    {/if}
-    {#if !loads}
-      <UtilisateurListe />
-    {/if}
+    <UtilisateurListe />
   </div>
 
   <br /><br /><br /><br /><br />

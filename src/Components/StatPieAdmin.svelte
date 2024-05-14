@@ -122,14 +122,11 @@
 <div style="width: 300px;">
   <canvas id={nom}></canvas>
   <br />
-  <div
-    style="display: flex; align-items: center; justify-content: center; gap:10px"
-  >
+  <div class="regroup">
     <div>
       <select
         class="form-select"
         aria-label=" select example"
-        style="width: 150px;"
         on:change={(e) => {
           region = e.target.value;
 
@@ -152,7 +149,6 @@
       <select
         class="form-select"
         aria-label=" select example"
-        style="width: 150px;"
         on:change={(e) => {
           district = e.target.value;
           if (e.target.value != "District") {
@@ -173,7 +169,6 @@
       <select
         class="form-select"
         aria-label=" select example"
-        style="width: 150px;"
         on:change={(e) => {
           anne = e.target.value;
           loadstat();
@@ -186,7 +181,26 @@
         {/each}
       </select>
     </div>
+    <br />
   </div>
 </div>
 
-<style></style>
+<style>
+  .regroup {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  select {
+    width: auto;
+  }
+  @media only screen and (max-width: 768px) {
+    .regroup {
+      flex-direction: column;
+    }
+    select {
+      width: 300px;
+    }
+  }
+</style>

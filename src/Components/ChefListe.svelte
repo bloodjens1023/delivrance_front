@@ -4,6 +4,8 @@
   import { onMount } from "svelte";
   import { Motion } from "svelte-motion";
   import Modal from "./Modal.svelte";
+  import ChargementConnect from "./ChargementConnect.svelte";
+  import Chargement from "./Chargement.svelte";
 
   let success = false;
   let error = false;
@@ -177,119 +179,123 @@
     </div>
   </Modal>
 {/if}
+{#await fetchUtilisateur()}
+  <center><Chargement /></center>
+{:then ds}
+  <!-- code de recherche -->
+  <center>
+    <form class="form">
+      <label for="search">
+        <input
+          class="input"
+          type="text"
+          required=""
+          bind:value={recherche}
+          on:input={() => {
+            search();
+          }}
+          placeholder="Rechercher un Email ..."
+          id="search"
+        />
+        <div class="fancy-bg"></div>
+        <div class="search">
+          <svg
+            viewBox="0 0 24 24"
+            aria-hidden="true"
+            class="r-14j79pv r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-4wgw6l r-f727ji r-bnwqim r-1plcrui r-lrvibr"
+          >
+            <g>
+              <path
+                d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
+              ></path>
+            </g>
+          </svg>
+        </div>
+      </label>
+    </form>
+    <br /><br />
+  </center>
+  <!-- fin code de recherche -->
+  <center>
+    <h2>Liste des chef d'arrondissements</h2>
+  </center>
+  <br />
 
-<!-- code de recherche -->
-<center>
-  <form class="form">
-    <label for="search">
-      <input
-        class="input"
-        type="text"
-        required=""
-        bind:value={recherche}
-        on:input={() => {
-          search();
-        }}
-        placeholder="Rechercher un Email ..."
-        id="search"
-      />
-      <div class="fancy-bg"></div>
-      <div class="search">
-        <svg
-          viewBox="0 0 24 24"
-          aria-hidden="true"
-          class="r-14j79pv r-4qtqp9 r-yyyyoo r-1xvli5t r-dnmrzs r-4wgw6l r-f727ji r-bnwqim r-1plcrui r-lrvibr"
-        >
-          <g>
-            <path
-              d="M21.53 20.47l-3.66-3.66C19.195 15.24 20 13.214 20 11c0-4.97-4.03-9-9-9s-9 4.03-9 9 4.03 9 9 9c2.215 0 4.24-.804 5.808-2.13l3.66 3.66c.147.146.34.22.53.22s.385-.073.53-.22c.295-.293.295-.767.002-1.06zM3.5 11c0-4.135 3.365-7.5 7.5-7.5s7.5 3.365 7.5 7.5-3.365 7.5-7.5 7.5-7.5-3.365-7.5-7.5z"
-            ></path>
-          </g>
-        </svg>
-      </div>
-    </label>
-  </form>
-  <br /><br />
-</center>
-<!-- fin code de recherche -->
-<center>
-  <h2>Liste des chef d'arrondissements</h2>
-</center>
-<br />
-<table>
-  <thead>
-    <tr>
-      <th scope="col">Nom</th>
-      <th scope="col">prenom</th>
-      <th scope="col">email</th>
-      <th scope="col">CNI</th>
-      <th scope="col">Tel</th>
-      <th scope="col">Dirigant</th>
-
-      <th scope="col">Supprimer</th>
-    </tr>
-  </thead>
-
-  <tbody>
-    {#each actuel as user}
+  <table>
+    <thead>
       <tr>
-        <td data-label="Account">{user["nom"]}</td>
-        <td data-label="Account">{user["prenom"]}</td>
+        <th scope="col">Nom</th>
+        <th scope="col">prenom</th>
+        <th scope="col">email</th>
+        <th scope="col">CNI</th>
+        <th scope="col">Tel</th>
+        <th scope="col">Dirigant</th>
 
-        <td data-label="email">{user["email"]}</td>
-        <td data-label="CNI">{user["cni"]}</td>
-        <td data-label="Amount">{user["tel"]}</td>
-        <td data-label="Amount"
-          >{user["dirige"]} / {user["district"]} / {user["region"]}</td
-        >
-        <td>
-          <Motion let:motion whileHover={{ rotate: "5deg", scale: 1.1 }}>
-            <button
-              class="btn btn-danger"
-              use:motion
-              on:click={() => {
-                showModal = true;
-                suppr = user["email"];
-              }}
-              ><svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                class="bi bi-trash3"
-                viewBox="0 0 16 16"
-              >
-                <path
-                  d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"
-                />
-              </svg></button
-            ></Motion
-          ></td
-        >
+        <th scope="col">Supprimer</th>
       </tr>
-    {/each}
-  </tbody>
-</table>
-<br />
-{#if actuel.length > 0}
-  <div
-    style="display: flex; align-items: center; justify-content: center; gap: 100px;"
-  >
-    <button on:click={prev} class="btn btn-dark btn-sm">prev</button>
-    <div
-      style="height: 100%; display: flex; align-items: center; justify-content: center; margin-top: 10px;"
-    >
-      <p>Page {currentPage} sur {totalPages}</p>
-    </div>
-    <button on:click={next} class="btn btn-dark btn-sm">next</button>
-  </div>
-{/if}
+    </thead>
 
-<br />
-<br />
-{#if users.length == 0}
-  <p>Aucun Chef d'arrondissement</p>
-{/if}
+    <tbody>
+      {#each actuel as user}
+        <tr>
+          <td data-label="Nom">{user["nom"]}</td>
+          <td data-label="Prénom">{user["prenom"]}</td>
+
+          <td data-label="Email">{user["email"]}</td>
+          <td data-label="CNI">{user["cni"]}</td>
+          <td data-label="Tel">{user["tel"]}</td>
+          <td data-label="Dirigeant"
+            >{user["dirige"]} / {user["district"]} / {user["region"]}</td
+          >
+          <td>
+            <Motion let:motion whileHover={{ rotate: "5deg", scale: 1.1 }}>
+              <button
+                class="btn btn-danger"
+                use:motion
+                on:click={() => {
+                  showModal = true;
+                  suppr = user["email"];
+                }}
+                ><svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-trash3"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5"
+                  />
+                </svg></button
+              ></Motion
+            ></td
+          >
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+  <br />
+  {#if actuel.length > 0}
+    <div
+      style="display: flex; align-items: center; justify-content: center; gap: 100px;"
+    >
+      <button on:click={prev} class="btn btn-dark btn-sm">prev</button>
+      <div
+        style="height: 100%; display: flex; align-items: center; justify-content: center; margin-top: 10px;"
+      >
+        <p>Page {currentPage} sur {totalPages}</p>
+      </div>
+      <button on:click={next} class="btn btn-dark btn-sm">next</button>
+    </div>
+  {/if}
+
+  <br />
+  <br />
+  {#if users.length == 0}
+    <p>Aucun Chef d'arrondissement</p>
+  {/if}
+{/await}
 
 <style>
   table {

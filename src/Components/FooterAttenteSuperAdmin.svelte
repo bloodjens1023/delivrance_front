@@ -30,7 +30,7 @@
           <div class="trois"></div>
           <Motion let:motion whileHover={{ scale: 1.1 }}>
             <a href="/SuperAdmin/ArrondissementSuperAdmin" use:motion
-              >Arrondissement</a
+              >Localisation</a
             >
           </Motion>
         </li>

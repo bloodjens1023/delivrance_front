@@ -1,11 +1,7 @@
 <script>
   // @ts-nocheck
-
-  // @ts-ignore
-  import Footer from "../../../Components/Footer.svelte";
   import HeaderAttente from "../../../Components/HeaderAttente.svelte";
   import { onMount } from "svelte";
-  import StatPie from "../../../Components/StatPie.svelte";
   import { goto } from "$app/navigation";
   import Erreur from "../../../Components/Erreur.svelte";
   import FooterAttenteUtilisateur from "../../../Components/FooterAttenteUtilisateur.svelte";
@@ -16,28 +12,6 @@
     console.log("https://bloodjens.pythonanywhere.com/" + a);
     return "https://bloodjens.pythonanywhere.com/" + a;
   }
-  const datass = {
-    labels: ["inscrit", "non inscrit"],
-    datasets: [
-      {
-        label: "Les personnes inscrit / non inscrit",
-        data: [70, 30],
-        backgroundColor: ["rgb(255, 99, 132)", "rgb(54, 162, 235)"],
-        hoverOffset: 5,
-      },
-    ],
-  };
-  const data2 = {
-    labels: ["Janvier", "Fevrier", "Mars", "Avril"],
-    datasets: [
-      {
-        label: "",
-        data: [70, 30, 10, 40],
-        backgroundColor: "rgb(54, 162, 235)",
-        hoverOffset: 10,
-      },
-    ],
-  };
 
   let val = "";
   let post = [];
@@ -147,9 +121,7 @@
         <br />
         <br />
         <br />
-        <div
-          style="width: 100%; display: flex; align-items: center; justify-content: center;"
-        >
+        <div class="rate">
           <Rate simple={true} />
         </div>
         <br />
@@ -168,9 +140,11 @@
     display: flex;
     justify-content: space-between;
   }
-  h1 {
-    font-size: 2rem;
-    font-weight: bold;
+  .rate {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
   p {
     font-size: 1.4em;
@@ -206,8 +180,11 @@
     p {
       font-size: 1em;
     }
-    h1 {
-      font-size: 1.7rem;
+    .rate {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .prev {
       flex-direction: column;

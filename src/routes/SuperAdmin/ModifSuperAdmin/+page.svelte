@@ -154,7 +154,7 @@
     <div>{datas.info}</div>
   </div>
 {/if}
-
+<title>Information</title>
 <div>
   <HeaderAttenteSuperAdmin men="active" />
   <br />

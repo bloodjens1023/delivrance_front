@@ -104,6 +104,7 @@
   });
 </script>
 
+<title>Generateur</title>
 {#if success}
   <div
     class="alert alert-success"

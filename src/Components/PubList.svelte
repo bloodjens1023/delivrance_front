@@ -185,12 +185,12 @@
   <tbody>
     {#each filtrer as user, i}
       <tr>
-        <td data-label="Account">{i + 1}</td>
-        <td data-label="Due Date">
+        <td data-label="ID">{i + 1}</td>
+        <td data-label="Photo">
           <img src={filter(user["photo"])} alt="" height="200px" />
         </td>
-        <td data-label="Amount">{user["description"]}</td>
-        <td data-label="Amount">{user["aimer"]}</td>
+        <td data-label="Déscription">{user["description"]}</td>
+        <td data-label="Aimer">{user["aimer"]}</td>
         <td>
           <Motion let:motion whileHover={{ rotate: "5deg", scale: 1.1 }}>
             <button

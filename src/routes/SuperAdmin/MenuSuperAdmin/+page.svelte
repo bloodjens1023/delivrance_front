@@ -50,6 +50,7 @@
   });
 </script>
 
+<title>Menu</title>
 <div>
   <HeaderAttenteSuperAdmin men="active" />
   <br />
@@ -118,33 +119,37 @@
         <br />
         <br />
         <br />
-        <div style="display: flex; justify-content: space-between; width: 90%;">
-          <div class="stat1">
-            <br />
-            <center>
-              <h3>Information sur les personnes inscrit</h3>
-            </center>
-            <br />
-            <StatPieAdmin />
-          </div>
-          <div class="stat1">
-            <center><h3>Les personnes inscrit chaque mois</h3></center>
-            <StatUser nom="Chart2" />
-          </div>
+      </div>
+      <div
+        style="display: flex; justify-content: center; width: 100%; flex-direction: column; gap:20px; align-items: center;"
+      >
+        <div class="stat1">
+          <br />
+          <center>
+            <h3>Information sur les personnes inscrit</h3>
+          </center>
+          <br />
+          <StatPieAdmin />
         </div>
-        <br /><br />
-        <div style="display: flex; justify-content: center; width: 100%;">
-          <div class="stat1">
-            <br />
-            <center>
-              <h4>Un Aperçu de la Performance de Mada Identité</h4>
-            </center>
-            <br />
-            <div style="width: 80%;">
-              <ProgressStat />
-            </div>
-            <br />
+        <div class="stat1">
+          <center><h3>Les personnes inscrit chaque mois</h3></center>
+          <StatUser nom="Chart2" />
+        </div>
+      </div>
+      <br /><br />
+      <div
+        style="display: flex; align-items: center; justify-content: center; flex-direction: column; width: 100%"
+      >
+        <div class="stat1">
+          <br />
+          <center>
+            <h4>Un Aperçu de la Performance de Mada Identité</h4>
+          </center>
+          <br />
+          <div style="width: 80%;">
+            <ProgressStat />
           </div>
+          <br />
         </div>
       </div>
     {:else}
@@ -200,8 +205,9 @@
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    width: 49%;
-    padding: 10px;
+    padding: 20px 10px 10px 10px;
+    width: 80%;
+
     border-radius: 3px 3px 20px 20px;
     border: 3px solid black;
   }

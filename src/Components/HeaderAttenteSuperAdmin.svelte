@@ -43,7 +43,7 @@
 
         <li class="nav-item">
           <a class="nav-link {arr}" href="/SuperAdmin/ArrondissementSuperAdmin"
-            >arrondissement</a
+            >Localisation</a
           >
         </li>
         <li class="nav-item">
