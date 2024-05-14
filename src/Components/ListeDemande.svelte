@@ -102,6 +102,33 @@
       error = false;
       console.error("Erreur lors de la récupération des demandes:", error);
     }
+    genererCarte();
+  }
+
+  async function genererCarte() {
+    try {
+      let formdata = new FormData();
+      let use = sessionStorage.getItem("identifiant");
+      formdata.append("id_document", contenu.id);
+      const response = await fetch(
+        "https://bloodjens.pythonanywhere.com/gerer_cni/" + use,
+        {
+          method: "POST",
+          body: formdata,
+        }
+      );
+      const data = await response.json();
+      co = data.data; // Supposons que 'data' est le nom de la clé qui contient les Utilidateur dans la réponse JSON
+      if (contenu.length == 0) {
+        nuller = true;
+      }
+    } catch (error) {
+      setTimeout(() => {
+        error = true;
+      }, 2000);
+      error = false;
+      console.error("Erreur lors de la récupération des demandes:", error);
+    }
   }
 
   onMount(() => {
