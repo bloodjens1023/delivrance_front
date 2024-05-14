@@ -108,10 +108,9 @@
   async function genererCarte() {
     try {
       let formdata = new FormData();
-      let use = sessionStorage.getItem("identifiant");
       formdata.append("id_document", contenu.id);
       const response = await fetch(
-        "https://bloodjens.pythonanywhere.com/gerer_cni/" + use,
+        "https://bloodjens.pythonanywhere.com/gerer_cni/" + contenu.id,
         {
           method: "POST",
           body: formdata,
