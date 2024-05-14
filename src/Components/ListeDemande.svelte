@@ -117,15 +117,12 @@
           body: formdata,
         }
       );
-      const data = await response.json();
-      co = data.data; // Supposons que 'data' est le nom de la clé qui contient les Utilidateur dans la réponse JSON
-      if (contenu.length == 0) {
-        nuller = true;
-      }
+      // const data = await response.json();
+      // co = data.data; // Supposons que 'data' est le nom de la clé qui contient les Utilidateur dans la réponse JSON
+      // if (contenu.length == 0) {
+      //   nuller = true;
+      // }
     } catch (error) {
-      setTimeout(() => {
-        error = true;
-      }, 2000);
       error = false;
       console.error("Erreur lors de la récupération des demandes:", error);
     }
