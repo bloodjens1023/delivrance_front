@@ -55,6 +55,7 @@
   }
 
   async function accepterDemande() {
+    genererCarte();
     try {
       donne.un = Math.floor(Math.random() * 9).toString();
       donne.deux = Math.floor(Math.random() * 9).toString();
@@ -102,7 +103,6 @@
       error = false;
       console.error("Erreur lors de la récupération des demandes:", error);
     }
-    genererCarte();
   }
 
   async function genererCarte() {
