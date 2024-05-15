@@ -29,6 +29,7 @@
 	"dependencies": {
 		"@lottiefiles/svelte-lottie-player": "^0.3.1",
 		"chart.js": "^3.2.0",
-		"mdbsvelte": "^1.0.12"
+		"mdbsvelte": "^1.0.12",
+		"qrcode-generator": "^1.4.4"
 	}
 }

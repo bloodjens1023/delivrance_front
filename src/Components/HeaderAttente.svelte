@@ -7,6 +7,7 @@
   export let dem = "";
   export let men = "";
   export let notif = "";
+  export let virt = "";
   let count = 0;
   async function fetchNotif() {
     let id = sessionStorage.getItem("identifiant");
@@ -85,6 +86,13 @@
             href="/Utilisateur/Notification"
             data-after-text={count}
             data-after-type="badge top right">Notifications</a
+          >
+        </li>
+        <li class="nav-item">
+          <a
+            class="nav-link {virt}"
+            href="/Utilisateur/Virtualisation"
+            data-after-type="badge top right">Virtualisation</a
           >
         </li>
         <li class="nav-item">
