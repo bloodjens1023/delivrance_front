@@ -6,11 +6,12 @@
   import FooterAttenteSuperAdmin from "../../../Components/FooterAttenteSuperAdmin.svelte";
   import DistrictListe from "../../../Components/DistrictListe.svelte";
   import RegiontListe from "../../../Components/RegiontListe.svelte";
+  import CniListe from "../../../Components/CniListe.svelte";
 
-  let loading = true;
   let region = true;
   let district = false;
   let arrond = false;
+  let cni = false;
   onMount(() => {
     try {
       let id = sessionStorage.getItem("admin");
@@ -42,6 +43,7 @@
               region = true;
               district = false;
               arrond = false;
+              cni = false;
             }}
           />
           <span class="name">Région</span>
@@ -54,6 +56,7 @@
               region = false;
               district = true;
               arrond = false;
+              cni = false;
             }}
           />
           <span class="name">District</span>
@@ -66,13 +69,27 @@
               region = false;
               district = false;
               arrond = true;
+              cni = false;
             }}
           />
           <span class="name">Arrondissement</span>
         </label>
+        <label class="radio">
+          <input
+            type="radio"
+            name="radio"
+            on:click={() => {
+              region = false;
+              district = false;
+              arrond = false;
+              cni = true;
+            }}
+          />
+          <span class="name">CNI</span>
+        </label>
       </div>
     </center>
-    <br /><br /><br />
+    <br />
     {#if arrond}
       <ArrondListe />
     {/if}
@@ -81,6 +98,9 @@
     {/if}
     {#if district}
       <DistrictListe />
+    {/if}
+    {#if cni}
+      <CniListe />
     {/if}
   </div>
 
