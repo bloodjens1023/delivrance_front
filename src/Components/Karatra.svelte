@@ -108,13 +108,8 @@
       style="height: 70vh; display: flex; align-items: center; justify-content: center; flex-direction: column; gap:30px"
     >
       <div class="loader"></div>
-      <div class="load"><h1>Aucun demande identifier</h1></div>
+      <div class="load"><h1>Aucun virtualisation identifier</h1></div>
       <br />
-      <Motion let:motion whileHover={{ scale: 1.2 }} whileTap={{ scale: 1.1 }}>
-        <a class="btn btn-success" href="/Utilisateur/Step" use:motion
-          >envoyer un demande</a
-        >
-      </Motion>
     </center>
   {/if}
 {/await}

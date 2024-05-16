@@ -54,12 +54,6 @@
     border-radius: 50%;
   }
 
-  .loader .button {
-    display: inline-block;
-    height: 32px;
-    width: 75px;
-  }
-
   .loader .line-1 {
     position: absolute;
     top: 11px;
