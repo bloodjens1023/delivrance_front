@@ -7,8 +7,8 @@
 
   import QRCode from "qrcode-generator";
   import { onMount } from "svelte";
-  import Chargement from "./Chargement.svelte";
   import { Motion } from "svelte-motion";
+  import ChargementKaratra from "./ChargementKaratra.svelte";
   function filter(a) {
     return "https://bloodjens.pythonanywhere.com/" + a;
   }
@@ -62,7 +62,7 @@
 </script>
 
 {#await fetchCart()}
-  <Chargement />
+  <ChargementKaratra />
 {:then dats}
   {#if ok}
     <div>
