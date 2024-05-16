@@ -163,7 +163,7 @@
     flex-direction: column;
   }
   .comm2 {
-    width: 90%;
+    width: 540px;
     border: 2px solid black;
     padding: 10px;
     border-radius: 10px;
@@ -171,15 +171,14 @@
 
   @media only screen and (max-width: 768px) {
     .comm {
-      width: 400px;
+      width: 300px;
     }
     .comm2 {
-      width: auto;
+      width: 330px;
     }
     input {
-      width: 300px;
+      width: 250px;
       font-size: 1.5em;
-      padding: 10px;
       border-radius: 10px;
       border: 3px solid black;
     }

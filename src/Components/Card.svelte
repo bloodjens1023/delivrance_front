@@ -39,7 +39,11 @@
   });
 </script>
 
-<div>
+<div
+  style="align-items: center;
+display: flex;
+flex-direction: column;"
+>
   <div class="card">
     <div class="content">
       <div style="display: flex; align-items: center; gap:10px">
@@ -52,9 +56,7 @@
       <center style="width: 100%;">
         <img id="img" src={image} alt="" style="" />
       </center>
-      <div
-        style="display: flex; align-items: center; justify-content: space-around; width:100%"
-      >
+      <div class="ref">
         <Like count={aimer} id={ids} />
         <button
           class="bookmarkBtn"
@@ -109,13 +111,20 @@
     margin-bottom: 30px;
     border-radius: 10px;
   }
+  .ref {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 30px;
+  }
   .content {
     display: flex;
     flex-direction: column;
     width: calc(100% - 50px);
     align-items: flex-start;
     gap: 24px;
-    padding: 36px;
+    padding: 10px 10px 30px 10px;
     border-radius: 0px 0px 30px 30px;
     color: #000000;
     overflow: hidden;
@@ -124,7 +133,7 @@
     transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
   }
   .bookmarkBtn {
-    width: 170px;
+    width: 150px;
     height: 40px;
     border-radius: 40px;
     border: none;
@@ -182,12 +191,15 @@
     transition-duration: 0.3s;
   }
   @media only screen and (max-width: 768px) {
+    .ref {
+      gap: 7px;
+    }
     .card {
       position: relative;
       display: flex;
       align-items: center;
       justify-content: center;
-      width: 450px;
+      width: auto;
       border-radius: 24px;
       line-height: 1.6;
       transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);

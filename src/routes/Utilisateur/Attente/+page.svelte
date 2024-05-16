@@ -6,6 +6,7 @@
   import HeaderAttente from "../../../Components/HeaderAttente.svelte";
   import FooterAttenteUtilisateur from "../../../Components/FooterAttenteUtilisateur.svelte";
   import { goto } from "$app/navigation";
+  import Chargement from "../../../Components/Chargement.svelte";
 
   let users = [];
   let id = "";
@@ -51,12 +52,10 @@
   });
 </script>
 
-<div>
+<div style="width: 100%">
   <HeaderAttente acc="active" />
   <br /><br /><br />
-  <div
-    style="width: 100%; display: flex; align-items: center; justify-content: center; flex-direction: column;"
-  >
+  <div style="">
     {#each filtrer as user}
       <Card
         description={user["description"]}
@@ -71,7 +70,7 @@
       <div
         style="height: 50vh; display: flex; align-items: center; justify-content: center;"
       >
-        <h1>Aucun nouveau disponible</h1>
+        <Chargement />
       </div>
     {/if}
   </div>

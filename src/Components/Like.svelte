@@ -58,7 +58,7 @@
 
 <style>
   .Btn {
-    width: 160px;
+    width: 145px;
     height: 35px;
     display: flex;
     align-items: center;
