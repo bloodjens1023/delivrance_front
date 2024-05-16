@@ -11,8 +11,8 @@
 <style>
   .loader {
     position: relative;
-    width: 240px;
-    height: 130px;
+    width: 350px;
+    height: 200px;
     margin-bottom: 10px;
     border: 1px solid #d3d3d3;
     padding: 15px;

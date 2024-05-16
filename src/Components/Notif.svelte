@@ -14,38 +14,12 @@
 {#if contenu["lue"]}
   <Motion
     let:motion
-    whileHover={{ boxShadow: "1px 1px 1px black", scale: 1.01 }}
-    whileTap={{ scale: 1 }}
-  >
-    <button
-      class="bg-dark text-white"
-      style="width: 100%; height: 100%; padding: 40px 10px; border: none; cursor: pointer; display: flex;  flex-direction:column"
-      use:motion
-      on:click={() => {
-        goto(contenu["lien"]);
-      }}
-    >
-      <p style="margin-left: 10px;">{contenu["description"]}</p>
-      <div style="margin-left: 20px;">
-        <ul>
-          <li>
-            <p style="text-decoration: underline;">Il y a {contenu["date"]}</p>
-          </li>
-        </ul>
-      </div>
-    </button>
-  </Motion>
-{/if}
-{#if !contenu["lue"]}
-  <Motion
-    let:motion
     whileHover={{ boxShadow: "3px 3px 3px black", scale: 1.02 }}
     whileTap={{ scale: 1 }}
   >
     <button
-      style="width: 100%; height: 100%; padding: 40px 10px; border: none; cursor: pointer; display: flex; justify-content: space-between; gap:10px; background-color: black;"
       use:motion
-      class="bg-dark text-white"
+      class="bg-dark text-white not"
       on:click={() => {
         goto(contenu["lien"]);
       }}
@@ -79,3 +53,24 @@
     </button>
   </Motion>
 {/if}
+
+<style>
+  .not {
+    width: 100%;
+    height: 100%;
+    padding: 20px 20px;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-around;
+    gap: 10px;
+    background-color: black;
+    border-radius: 10px;
+  }
+  @media only screen and (max-width: 768px) {
+    .not {
+      font-size: 0.7em;
+      padding: 10px 10px;
+    }
+  }
+</style>
