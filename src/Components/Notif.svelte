@@ -62,7 +62,7 @@
     border: none;
     cursor: pointer;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     gap: 10px;
     background-color: black;
     border-radius: 10px;
