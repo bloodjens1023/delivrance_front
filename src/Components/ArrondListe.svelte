@@ -707,6 +707,10 @@
   }
 
   @media screen and (max-width: 600px) {
+    #input {
+      max-width: 800px;
+      width: auto;
+    }
     table {
       border: 0;
     }

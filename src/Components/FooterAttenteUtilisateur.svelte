@@ -29,6 +29,12 @@
         <li>
           <div class="trois"></div>
           <Motion let:motion whileHover={{ scale: 1.1 }}>
+            <a href="/Utilisateur/Virtualisation" use:motion>Virtualisation</a>
+          </Motion>
+        </li>
+        <li>
+          <div class="trois"></div>
+          <Motion let:motion whileHover={{ scale: 1.1 }}>
             <a href="/Utilisateur/Menu" use:motion>Menu</a>
           </Motion>
         </li>
