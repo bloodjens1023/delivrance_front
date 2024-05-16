@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import PubList from "./PubList.svelte";
   import { Motion } from "svelte-motion";
+  import ChargementConnect from "./ChargementConnect.svelte";
 
   let ids = 0;
   let image = "";
@@ -12,6 +13,7 @@
   let loads = false;
   let actu = false;
   let modifier = false;
+  let load_pub = false;
 
   function filter(a) {
     return "https://bloodjens.pythonanywhere.com/" + a;
@@ -43,16 +45,11 @@
       image = "";
       fetchUtilisateur();
       window.scrollTo({ top: document.body.scrollHeight, behavior: "smooth" });
-      setTimeout(() => {
-        success = false;
-      }, 1000);
+      success = false;
+      load_pub = false;
     } else {
       error = true;
       loads = false;
-
-      setTimeout(() => {
-        error = false;
-      }, 1000);
     }
   };
 
@@ -249,19 +246,16 @@
     </div>
 
     <br />
-    {#if !modifier}
+    {#if !modifier && !load_pub}
       <button
         on:click={(e) => {
-          if (description == "") {
-            error = true;
-            setTimeout(() => {
-              error = false;
-            }, 1000);
-          } else {
-            handleSubmit(e);
-          }
+          load_pub = true;
+          handleSubmit(e);
         }}>Publier</button
       >
+    {/if}
+    {#if load_pub}
+      <ChargementConnect />
     {/if}
     {#if modifier}
       <button

@@ -145,13 +145,13 @@
   // });
 </script>
 
-{#if showModal}
+<!-- {#if showModal}
   <Modal bind:showModal>
     <h2 slot="header">⚠ Attention !</h2>
     <hr />
     <br />
     <ol class="definition-list">
-      voulez-vous vraiment supprimer cet district ?
+      voulez-vous vraiment supprimer cet CNI ?
     </ol>
     <hr />
     <div style="display: flex; gap:10px">
@@ -170,7 +170,7 @@
       >
     </div>
   </Modal>
-{/if}
+{/if} -->
 
 {#if !modif}
   <center style="display: flex; gap: 30px;">
