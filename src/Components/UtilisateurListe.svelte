@@ -218,7 +218,7 @@
   </center>
   <!-- fin code de recherche -->
   <center>
-    <h2>Liste des utilisateurs de chaque arrondissement</h2>
+    <h2>Liste de tous les utilisateurs</h2>
   </center>
   <br />
   <table>
