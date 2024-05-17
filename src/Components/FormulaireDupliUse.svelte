@@ -2,6 +2,7 @@
   // @ts-nocheck
   import { onMount } from "svelte";
   import { Motion } from "svelte-motion";
+  import ChargementConnect from "./ChargementConnect.svelte";
 
   let donne = {};
   let success = false;
@@ -21,7 +22,7 @@
     formdata.append("photo", donne.photo);
     formdata.append("certificat", donne.resid);
     formdata.append("identifiant", sessionStorage.getItem("identifiant"));
-
+    loads = true;
     let response;
     if (update) {
       let use = sessionStorage.getItem("identifiant");
@@ -41,8 +42,6 @@
         }
       );
     }
-
-    loads = true;
 
     const data = await response.json();
     const message = data.message;
@@ -237,11 +236,7 @@
 
         <div class="input-container">
           {#if loads}
-            <div class="three-body">
-              <div class="three-body__dot"></div>
-              <div class="three-body__dot"></div>
-              <div class="three-body__dot"></div>
-            </div>
+            <ChargementConnect />
           {/if}
         </div>
       </div>
@@ -274,8 +269,7 @@
     width: 350px;
   }
 
-  .input-container input[type="text"],
-  .input-container input[type="password"] {
+  .input-container input[type="text"] {
     font-size: 20px;
     width: 100%;
     border: none;
@@ -302,15 +296,6 @@
     color: #333;
   }
 
-  .input-container input[type="password"]:focus ~ .label,
-  .input-container input[type="password"]:valid ~ .label {
-    top: -20px;
-    font-size: 16px;
-    color: #333;
-
-    font-weight: bold;
-  }
-
   .input-container .underline {
     position: absolute;
     bottom: 0;
@@ -323,9 +308,7 @@
   }
 
   .input-container input[type="text"]:focus ~ .underline,
-  .input-container input[type="text"]:valid ~ .underline,
-  .input-container input[type="password"]:focus ~ .underline,
-  .input-container input[type="password"]:valid ~ .underline {
+  .input-container input[type="text"]:valid ~ .underline {
     transform: scaleX(1);
   }
   .button {
@@ -343,107 +326,5 @@
   .button:hover {
     background-color: #5f6468;
     color: white;
-  }
-  .three-body {
-    --uib-size: 35px;
-    --uib-speed: 0.8s;
-    --uib-color: #000000;
-    position: relative;
-    display: inline-block;
-    height: var(--uib-size);
-    width: var(--uib-size);
-    animation: spin78236 calc(var(--uib-speed) * 2.5) infinite linear;
-  }
-
-  .three-body__dot {
-    position: absolute;
-    height: 100%;
-    width: 30%;
-  }
-
-  .three-body__dot:after {
-    content: "";
-    position: absolute;
-    height: 0%;
-    width: 100%;
-    padding-bottom: 100%;
-    background-color: var(--uib-color);
-    border-radius: 50%;
-  }
-
-  .three-body__dot:nth-child(1) {
-    bottom: 5%;
-    left: 0;
-    transform: rotate(60deg);
-    transform-origin: 50% 85%;
-  }
-
-  .three-body__dot:nth-child(1)::after {
-    bottom: 0;
-    left: 0;
-    animation: wobble1 var(--uib-speed) infinite ease-in-out;
-    animation-delay: calc(var(--uib-speed) * -0.3);
-  }
-
-  .three-body__dot:nth-child(2) {
-    bottom: 5%;
-    right: 0;
-    transform: rotate(-60deg);
-    transform-origin: 50% 85%;
-  }
-
-  .three-body__dot:nth-child(2)::after {
-    bottom: 0;
-    left: 0;
-    animation: wobble1 var(--uib-speed) infinite calc(var(--uib-speed) * -0.15)
-      ease-in-out;
-  }
-
-  .three-body__dot:nth-child(3) {
-    bottom: -5%;
-    left: 0;
-    transform: translateX(116.666%);
-  }
-
-  .three-body__dot:nth-child(3)::after {
-    top: 0;
-    left: 0;
-    animation: wobble2 var(--uib-speed) infinite ease-in-out;
-  }
-
-  @keyframes spin78236 {
-    0% {
-      transform: rotate(0deg);
-    }
-
-    100% {
-      transform: rotate(360deg);
-    }
-  }
-
-  @keyframes wobble1 {
-    0%,
-    100% {
-      transform: translateY(0%) scale(1);
-      opacity: 1;
-    }
-
-    50% {
-      transform: translateY(-66%) scale(0.65);
-      opacity: 0.8;
-    }
-  }
-
-  @keyframes wobble2 {
-    0%,
-    100% {
-      transform: translateY(0%) scale(1);
-      opacity: 1;
-    }
-
-    50% {
-      transform: translateY(66%) scale(0.65);
-      opacity: 0.8;
-    }
   }
 </style>
