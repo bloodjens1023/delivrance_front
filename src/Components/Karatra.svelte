@@ -227,7 +227,7 @@
     position: absolute;
     top: 4em;
     left: 1em;
-    width: 90px;
+    height: 120px;
     border-radius: 10px;
   }
   .back {
@@ -351,12 +351,6 @@
     width: 100%;
     height: 100%;
     object-fit: cover; /* Ajuster l'image à la taille du conteneur tout en préservant les proportions */
-    clip-path: polygon(
-      0 0,
-      100% 0,
-      100% 70%,
-      0 70%
-    ); /* Définir la forme de rognage souhaitée */
     border-radius: 5px;
   }
 
