@@ -80,12 +80,9 @@
             <p class="heading_8271 cni">{insererEspace(dats["numCNI"])}</p>
 
             <img src={kart} alt="" srcset="" class="chip" />
-            <img
-              src={filter(dats["photo"])}
-              alt=""
-              width="90px"
-              class="photo"
-            />
+            <div class="photo">
+              <img src={filter(dats["photo"])} alt="" class="img" />
+            </div>
             <img src={logo} alt="" class="back" />
           </div>
           <div class="flip-card-back">
@@ -348,6 +345,18 @@
     100% {
       background-position: left;
     }
+  }
+
+  .img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Ajuster l'image à la taille du conteneur tout en préservant les proportions */
+    clip-path: polygon(
+      0 0,
+      100% 0,
+      100% 75%,
+      0 100%
+    ); /* Définir la forme de rognage souhaitée */
   }
 
   @media only screen and (max-width: 768px) {
