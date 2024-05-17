@@ -354,9 +354,10 @@
     clip-path: polygon(
       0 0,
       100% 0,
-      100% 75%,
-      0 100%
+      100% 70%,
+      0 70%
     ); /* Définir la forme de rognage souhaitée */
+    border-radius: 5px;
   }
 
   @media only screen and (max-width: 768px) {
