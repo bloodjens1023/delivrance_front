@@ -10,6 +10,7 @@
   import Chargement from "../../../Components/Chargement.svelte";
   import Rate from "../../../Components/Rate.svelte";
   import ProgressStat from "../../../Components/ProgressStat.svelte";
+  import StatCni from "../../../Components/StatCni.svelte";
 
   let loads = true;
   setTimeout(() => {
@@ -102,6 +103,22 @@
         <br />
         <div style="width: 90%; padding: 10px;">
           <StatUser />
+        </div>
+      </div>
+    </div>
+
+    <br /><br />
+    <div
+      style="width: 100%; display:flex;align-items: center; justify-content: center;flex-direction: column;"
+    >
+      <div class="stat">
+        <div class="titre">
+          <div>
+            <h1>Statistique des CNI délivré chaque mois</h1>
+          </div>
+        </div>
+        <div style="width: 90%; padding: 10px;">
+          <StatCni />
         </div>
       </div>
     </div>
