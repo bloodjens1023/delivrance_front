@@ -8,7 +8,7 @@
   import Prima from "../../../Components/Prima.svelte";
   import Erreur from "../../../Components/Erreur.svelte";
 
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { Motion } from "svelte-motion";
   import FooterAttenteUtilisateur from "../../../Components/FooterAttenteUtilisateur.svelte";
   import { goto } from "$app/navigation";
@@ -27,10 +27,6 @@
     etatDocument: "",
     typeDocument: "",
   };
-
-  let val = "";
-
-  let load = true;
 
   let users = "";
   const getPosts = async () => {

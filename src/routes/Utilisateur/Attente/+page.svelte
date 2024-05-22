@@ -52,10 +52,10 @@
   });
 </script>
 
-<div style="width: 100%">
+<div style="width: 100%; background-color: #e9ebee;">
   <HeaderAttente acc="active" />
   <br /><br /><br />
-  <div style="">
+  <div style="background-color: #e9ebee;">
     {#each filtrer as user}
       <Card
         description={user["description"]}

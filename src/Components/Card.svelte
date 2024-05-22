@@ -42,11 +42,13 @@
 <div
   style="align-items: center;
 display: flex;
-flex-direction: column;"
+flex-direction: column; background-color: #e9ebee;"
 >
   <div class="card">
     <div class="content">
-      <div style="display: flex; align-items: center; gap:10px">
+      <div
+        style="display: flex; align-items: center; gap:10px; width: 100%;border:3px solid black; padding: 10px; border-radius: 20px;"
+      >
         <img src={logo} alt="" style="width: 70px; " />
         <span style="font-size: 1.5em; font-weight: bold;">Administrateur</span>
       </div>
@@ -95,6 +97,12 @@ flex-direction: column;"
 </div>
 
 <style>
+  .para {
+    text-align: justify;
+    padding: 10px 30px 0px 30px;
+
+    font-weight: bold;
+  }
   .card {
     position: relative;
     display: flex;
@@ -104,12 +112,14 @@ flex-direction: column;"
     border-radius: 24px;
     line-height: 1.6;
     transition: all 0.48s cubic-bezier(0.23, 1, 0.32, 1);
+    background-color: #e9ebee;
   }
   #img {
     height: 250px;
     margin-top: 40px;
-    margin-bottom: 30px;
+
     border-radius: 10px;
+    padding-bottom: 60px;
   }
   .ref {
     display: flex;

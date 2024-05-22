@@ -8,7 +8,7 @@
   import { blur } from "svelte/transition";
   import { onMount } from "svelte";
   import { goto } from "$app/navigation";
-
+  import toast, { Toaster } from "svelte-french-toast";
   let visible = false;
 
   onMount(() => {
@@ -32,7 +32,6 @@
   let loading = false;
 
   async function handleSubmit() {
-    console.log(arrond);
     loading = true;
     const response = await fetch(
       "https://bloodjens.pythonanywhere.com/api_inscription/",
@@ -48,25 +47,20 @@
     const data = await response.json();
     const message = data.message;
     info = data.info;
-    console.log(message);
 
     if (message) {
-      console.log("utilisateur inserer");
-      // Redirection ou autre action après la création réussie
+      toast.success("Inscription réussite", {
+        style: "font-size:20px; padding:10px",
+      });
       loading = false;
-      success = true;
-      setTimeout(() => {
-        success = false;
-      }, 1000);
+
       sessionStorage.setItem("identifiant", identifiant);
       goto("/Utilisateur/Step");
     } else {
-      console.error("Erreur");
-      error = true;
+      toast.error("Erreur de l'inscription", {
+        style: "font-size:20px; padding:10px",
+      });
       loading = false;
-      setTimeout(() => {
-        error = false;
-      }, 1000);
     }
   }
 
@@ -84,10 +78,9 @@
       arrondissements = data.data;
       arrond = "";
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des arrondissements:",
-        error
-      );
+      toast.error("Erreur du serveur", {
+        style: "font-size:20px; padding:10px",
+      });
     }
   }
   async function fetchregion() {
@@ -100,10 +93,9 @@
       regions = data.data;
       arrond = "";
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des arrondissements:",
-        error
-      );
+      toast.error("Erreur du serveur", {
+        style: "font-size:20px; padding:10px",
+      });
     }
   }
 
@@ -117,10 +109,9 @@
       districts = data.data;
       arrond = "";
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des arrondissements:",
-        error
-      );
+      toast.error("Erreur du serveur", {
+        style: "font-size:20px; padding:10px",
+      });
     }
   }
 
@@ -130,51 +121,7 @@
   });
 </script>
 
-{#if success}
-  <div
-    class="alert alert-success"
-    role="alert"
-    style="position: fixed; bottom: 0; left: 20px"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-check-circle-fill"
-      viewBox="0 0 16 16"
-      style="margin-right: 10px;"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
-      />
-    </svg>
-    Utilisateur inscrit avec success
-  </div>
-{/if}
-
-{#if error}
-  <div
-    class="alert alert-danger d-flex align-items-center"
-    role="alert"
-    style="position: fixed; bottom: 0; left: 20px"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-exclamation-circle-fill"
-      viewBox="0 0 16 16"
-      style="margin-right: 10px;"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-      />
-    </svg>
-    <div>{info}</div>
-  </div>
-{/if}
+<Toaster />
 <div>
   <Header />
   <br />

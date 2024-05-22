@@ -5,8 +5,8 @@
   export let comment = [];
   let commentaire = "";
   import { onMount } from "svelte";
-  import { goto } from "$app/navigation";
-  export let success = false;
+  import toast, { Toaster } from "svelte-french-toast";
+  // export let success = false;
   let identifiant;
   export let id = "";
   export let details = true;
@@ -36,28 +36,7 @@
   }
 </script>
 
-{#if success}
-  <div
-    class="alert alert-success"
-    role="alert"
-    style="position: fixed; bottom: 50px; right: 50px ;z-index: 9999;"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-check-circle-fill"
-      viewBox="0 0 16 16"
-      style="margin-right: 10px;"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
-      />
-    </svg>
-    Votre commentaire a été envoyé✨
-  </div>
-{/if}
+<Toaster />
 <div class="comm2">
   <div style="width: 100%; ">
     {#each comment as comments, i}
@@ -111,7 +90,7 @@
   <input type="text" bind:value={commentaire} />
   <Motion let:motion whileHover={{ scale: 1.2 }} whileTap={{ scale: 1.1 }}>
     <button
-      style="width: 100px; background-color: white; border: none;"
+      style="width: 100px; background-color: white; border: none; padding-top: 10px; padding-bottom: 10px; background-color: #e9ebee;"
       use:motion
       on:click={() => {
         if (commentaire != "") {
@@ -119,13 +98,19 @@
           for (const iterator of comment) {
             a.push(iterator);
           }
-          success = true;
-          setTimeout(() => {
-            success = false;
-          }, 2000);
+
           fetchComm(id);
           comment = a;
           commentaire = "";
+          toast.success("Commentaire ajouté", {
+            style: "font-size:15px; padding:10px",
+            duration: 2000,
+          });
+        } else {
+          toast.error("Erreur de l'envoie", {
+            style: "font-size:15px; padding:10px",
+            duration: 2000,
+          });
         }
       }}
       ><svg
