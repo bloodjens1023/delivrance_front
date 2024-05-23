@@ -1,53 +1,69 @@
 <script>
   // @ts-nocheck
 
-  let apiKey = "acc_e201826d4119173";
-  let apiSecret = "5aec3dbd2376f2f590ac3f7f3e3df044";
-  let result = "";
-  let imageFile;
+  let donne = {};
 
-  const handleFileChange = async (event) => {
-    try {
-      const files = event.target.files;
-      if (files.length === 0) {
-        return;
-      }
-
-      imageFile = files[0];
-
-      // Create FormData and append the image file
-      const formData = new FormData();
-      formData.append("image", imageFile);
-
-      // Make the API request
-      const apiResponse = await fetch("https://api.imagga.com/v2/text", {
+  const verif_certificat = async (event) => {
+    event.preventDefault();
+    let formdata = new FormData();
+    formdata.append("certificat", donne.certificat);
+    let response;
+    response = await fetch(
+      "https://bloodjens.pythonanywhere.com/api_verif_certificat/",
+      {
         method: "POST",
-        headers: {
-          Authorization: "Basic " + btoa(apiKey + ":" + apiSecret),
-        },
-        body: formData,
-      });
-
-      const jsonResponse = await apiResponse.json();
-      const textData = jsonResponse.result.text;
-
-      for (let j of textData) {
-        if (j.data.toLowerCase() === "certificat de residence") {
-          result = "ok";
-          break;
-        } else {
-          result = "not found";
-        }
+        body: formdata,
       }
-    } catch (error) {
-      console.error("Error:", error);
-      result = "error";
-    }
+    );
+    const data = await response.json();
+    let users = data.data;
+    console.log(users);
+  };
+  const verif_photo = async (event) => {
+    event.preventDefault();
+    let formdata = new FormData();
+    formdata.append("photo", donne.photo);
+    let response;
+    response = await fetch(
+      "https://bloodjens.pythonanywhere.com/api_verif_photo/",
+      {
+        method: "POST",
+        body: formdata,
+      }
+    );
+    const data = await response.json();
+    let users = data.data;
+    console.log(users);
   };
 </script>
 
-<main>
-  <h1>Upload an Image</h1>
-  <input type="file" accept="image/*" on:change={handleFileChange} />
-  <h2>Result: {result}</h2>
-</main>
+<div
+  style="display: flex; align-items: center; justify-content: center; width: 50%;"
+>
+  <input
+    class="form-control"
+    type="file"
+    required
+    accept="image/* "
+    id="formFile"
+    bind:value={donne.photo}
+    on:change={(e) => {
+      donne.photo = e.target.files[0];
+    }}
+  />
+  <button on:click={verif_photo}>tester</button>
+
+  <br /><br />
+  <input
+    class="form-control"
+    type="file"
+    required
+    accept="image/* "
+    id="formFile"
+    bind:value={donne.certificat}
+    on:change={(e) => {
+      donne.certificat = e.target.files[0];
+    }}
+  />
+  <button on:click={verif_certificat}>tester</button>
+</div>

@@ -5,10 +5,28 @@
   import { onMount } from "svelte";
   import { Motion } from "svelte-motion";
   import ChargementConnect from "./ChargementConnect.svelte";
+  import { Toaster } from "svelte-french-toast";
+  import Modal from "./Modal.svelte";
+  import Spinner from "./Spinner.svelte";
+  import Accepter from "./Accepter.svelte";
+  import Ers from "./Ers.svelte";
 
   let donne = {};
   let success = false;
   let error = false;
+  let showModal = false;
+  let accepter_photo = false;
+  let accepter_certif = false;
+  let accepter_acte = false;
+
+  let refuser_photo = false;
+  let refuser_certif = false;
+  let refuser_acte = false;
+
+  let chargement_photo = true;
+  let chargement_certif = true;
+  let chargement_acte = true;
+
   export let onSubmit = () => {};
   let loads = false;
   export let update = false;
@@ -68,34 +86,6 @@
       }, 1000);
     }
   };
-  // function check() {
-  //   if (
-  //     donne.nom == undefined ||
-  //     donne.prenom == undefined ||
-  //     donne.adresse == undefined ||
-  //     donne.photo == undefined ||
-  //     donne.acte == undefined ||
-  //     donne.resid == undefined ||
-  //     donne.pass == undefined
-  //   ) {
-  //     error = true;
-  //     if (error) {
-  //       setTimeout(function () {
-  //         error = false;
-  //       }, 2000);
-  //     }
-  //   } else {
-  //     success = true;
-  //     if (success) {
-  //       setTimeout(function () {
-  //         success = false;
-  //       }, 1000);
-  //       onSubmit(donne);
-  //     }
-  //   }
-  //   //condition verification mots de passe
-  //   //
-  // }
 
   let users = "";
   const getPosts = async () => {
@@ -107,11 +97,6 @@
 
     const data = await res.json();
     const filter = data;
-
-    // let r = filter.split("/");
-    // r.shift();
-    // let z = r.join("/");
-
     return filter;
   };
 
@@ -123,59 +108,167 @@
       donne.nom = post["nom"];
       donne.prenom = post["prenom"];
       donne.adresse = post["adresse"];
-      // donne.photo = post["photo"];
-      // donne.resid = post["certificat"];
-      // donne.acte = post["acte"];
     }
   });
+
+  function verifier_document() {
+    chargement_photo = true;
+    chargement_acte = true;
+    chargement_certif = true;
+    accepter_photo = false;
+    accepter_acte = false;
+    accepter_certif = false;
+    refuser_photo = false;
+    refuser_acte = false;
+    refuser_certif = false;
+
+    showModal = true;
+    verif_photo();
+    verif_certificat();
+    verif_acte();
+  }
+
+  const verif_certificat = async (event) => {
+    let formdata = new FormData();
+    formdata.append("certificat", donne.resid);
+    let response;
+    response = await fetch(
+      "https://bloodjens.pythonanywhere.com/api_verif_certificat/",
+      {
+        method: "POST",
+        body: formdata,
+      }
+    );
+    const data = await response.json();
+    let users = data.data;
+    if (users) {
+      accepter_certif = true;
+      chargement_certif = false;
+    } else {
+      refuser_certif = true;
+      chargement_certif = false;
+    }
+  };
+  const verif_photo = async (event) => {
+    let formdata = new FormData();
+    formdata.append("photo", donne.photo);
+    let response;
+    response = await fetch(
+      "https://bloodjens.pythonanywhere.com/api_verif_photo/",
+      {
+        method: "POST",
+        body: formdata,
+      }
+    );
+    const data = await response.json();
+    let users = data.data;
+    if (users) {
+      accepter_photo = true;
+      chargement_photo = false;
+    } else {
+      refuser_photo = true;
+      chargement_photo = false;
+    }
+  };
+
+  const verif_acte = async (event) => {
+    let formdata = new FormData();
+    formdata.append("acte", donne.acte);
+    let response;
+    response = await fetch(
+      "https://bloodjens.pythonanywhere.com/api_verif_acte/",
+      {
+        method: "POST",
+        body: formdata,
+      }
+    );
+    const data = await response.json();
+    let users = data.data;
+    if (users) {
+      accepter_acte = true;
+      chargement_acte = false;
+    } else {
+      refuser_acte = true;
+      chargement_acte = false;
+    }
+  };
 </script>
 
-{#if success}
-  <div
-    class="alert alert-success"
-    role="alert"
-    style="position: fixed; bottom: 0; right: 20px"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-check-circle-fill"
-      viewBox="0 0 16 16"
-      style="margin-right: 10px;"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
-      />
-    </svg>
-    Votre formulaire est envoyé avec success
-  </div>
-{/if}
+<Modal bind:showModal>
+  <h2 style="margin: 30px; margin-right: 30px;">
+    <small>Verification des information</small>
+  </h2>
 
-{#if error}
-  <div
-    class="alert alert-danger d-flex align-items-center"
-    role="alert"
-    style="position: fixed; bottom: 0; right: 20px"
+  <ol
+    class="definition-list"
+    style="display: flex;
+  flex-direction: column;
+  align-items: baseline; width: 100%;"
   >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-exclamation-circle-fill"
-      viewBox="0 0 16 16"
-      style="margin-right: 10px;"
+    <br />
+    <div style="display: flex; gap: 30px;">
+      {#if accepter_photo}
+        <Accepter />
+      {/if}
+      {#if refuser_photo}
+        <Ers />
+      {/if}
+      {#if chargement_photo}
+        <Spinner />
+      {/if}
+      <p style="font-size: 1.1em;">Verification du photo d'identité</p>
+    </div>
+    <br />
+    <div
+      style="display: flex; gap: 30px; align-items: start; justify-content: center;"
     >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-      />
-    </svg>
-    <div>Erreur de remplissage du formulaire</div>
-  </div>
-{/if}
+      {#if accepter_acte}
+        <Accepter />
+      {/if}
+      {#if refuser_acte}
+        <Ers />
+      {/if}
+      {#if chargement_acte}
+        <Spinner />
+      {/if}
+      <div style="font-size: 1.1em;">Verification de l'acte de naissance</div>
+    </div>
+    <br />
+    <div
+      style="display: flex; gap: 30px; align-items: center; justify-content: center;"
+    >
+      {#if accepter_certif}
+        <Accepter />
+      {/if}
+      {#if refuser_certif}
+        <Ers />
+      {/if}
+      {#if chargement_certif}
+        <Spinner />
+      {/if}
+      <div style="font-size: 1.1em;">
+        Verification du certificat de résidence
+      </div>
+    </div>
+    <br />
+    <div
+      style="width: 100%; display: flex; align-items: center; justify-content: center;"
+    >
+      {#if accepter_acte && accepter_certif && accepter_photo}
+        <input
+          type="button"
+          value="Suivant"
+          class="btn btn-outline-dark"
+          style="width: 300px;"
+          on:click={handleSubmit}
+        />
+      {/if}
+    </div>
+  </ol>
+  <br /><br />
+</Modal>
 
+<Toaster />
 {#await getPosts}
   <p>chargement</p>
 {:then data}
@@ -283,10 +376,10 @@
             <Motion let:motion whileHover={{ rotate: "3deg" }}>
               <input
                 type="button"
-                value="Suivant"
+                value="Verifier"
                 class="button"
                 use:motion
-                on:click={handleSubmit}
+                on:click={verifier_document}
               />
             </Motion>
           </div>
