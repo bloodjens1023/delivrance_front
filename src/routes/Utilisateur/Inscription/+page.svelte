@@ -51,7 +51,7 @@
 
       if (message) {
         toast.success("Inscription réussite", {
-          style: "font-size:20px; padding:10px",
+          style: "font-size:15px; padding:10px",
         });
         loading = false;
 
@@ -59,7 +59,7 @@
         goto("/Utilisateur/Step");
       } else {
         toast.error("Erreur de l'inscription", {
-          style: "font-size:20px; padding:10px",
+          style: "font-size:15px; padding:10px",
         });
         loading = false;
       }
