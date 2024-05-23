@@ -6,6 +6,7 @@
   import { goto } from "$app/navigation";
   import FooterAttenteSuperAdmin from "../../../Components/FooterAttenteSuperAdmin.svelte";
   import Chargement from "../../../Components/Chargement.svelte";
+  import toast, { Toaster } from "svelte-french-toast";
 
   let loads = true;
   setTimeout(() => {
@@ -58,17 +59,16 @@
 
     if (message) {
       loading = false;
-      success = true;
-      setTimeout(() => {
-        success = false;
-      }, 1000);
+      toast.success("Nouveau code enregistré", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     } else {
-      console.error("Erreur");
-      error = true;
+      toast.success("erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
       loading = false;
-      setTimeout(() => {
-        error = false;
-      }, 1000);
     }
   };
 
@@ -127,7 +127,7 @@
     Code Géneré et enregistrer avec succès
   </div>
 {/if}
-
+<Toaster />
 <HeaderAttenteSuperAdmin gener="active" />
 <br /><br /><br />
 {#if loads}
@@ -227,6 +227,11 @@
               donne.quatre = Math.floor(Math.random() * 9).toString();
               donne.cinq = Math.floor(Math.random() * 9).toString();
               donne.six = Math.floor(Math.random() * 9).toString();
+
+              toast.success("génération réussite", {
+                style: "font-size:15px; padding:10px",
+                duration: 2000,
+              });
             }}>Regenerer</button
           >
           <button class="btn btn-success" on:click={handleSubmit}

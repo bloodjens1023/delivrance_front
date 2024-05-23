@@ -1,10 +1,10 @@
 <script>
   // @ts-nocheck
-  import { goto } from "$app/navigation";
-  import { onDestroy, onMount } from "svelte";
+  import { onMount } from "svelte";
   import { Motion } from "svelte-motion";
   import Modal from "./Modal.svelte";
   import ChargementConnect from "./ChargementConnect.svelte";
+  import toast, { Toaster } from "svelte-french-toast";
 
   let showModal = false;
   let suppr = "";
@@ -30,8 +30,16 @@
       users = [];
       fetchUtilisateur();
       suppr = "";
+      toast.success("Une district a été supprimer", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
       return true;
     } else {
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
       return false;
     }
   };
@@ -49,7 +57,10 @@
       totalPages = Math.ceil(filtrer.length / itemsPerPage);
       actuel = getCurrentPageData();
     } catch (error) {
-      console.error("Erreur lors de la récupération des Utilisateur:", error);
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -65,82 +76,98 @@
 
   // code ajout district
   const handleSubmit = async (event) => {
-    event.preventDefault();
-    let formdata = new FormData();
-    formdata.append("nom", noms);
-    formdata.append("code", codes);
-    formdata.append("region", region);
+    try {
+      event.preventDefault();
+      let formdata = new FormData();
+      formdata.append("nom", noms);
+      formdata.append("code", codes);
+      formdata.append("region", region);
 
-    let response;
-    response = await fetch(
-      "https://bloodjens.pythonanywhere.com/api_insertion_district/",
-      {
-        method: "POST",
-        body: formdata,
+      let response;
+      response = await fetch(
+        "https://bloodjens.pythonanywhere.com/api_insertion_district/",
+        {
+          method: "POST",
+          body: formdata,
+        }
+      );
+
+      const data = await response.json();
+      const message = data.message;
+      console.log(message);
+      fetchUtilisateur();
+      ajout = false;
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // Pour un défilement en douceur
+      });
+      if (message) {
+        toast.success("Une district a été ajouter", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
+        noms = "";
+
+        // sessionStorage.setItem("identifiant", identifiant);
+      } else {
+        toast.error("Erreur de serveur", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
       }
-    );
-
-    const data = await response.json();
-    const message = data.message;
-    console.log(message);
-    fetchUtilisateur();
-    ajout = false;
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Pour un défilement en douceur
-    });
-    if (message) {
-      success = true;
-      setTimeout(() => {
-        success = false;
-      }, 1000);
-      noms = "";
-
-      // sessionStorage.setItem("identifiant", identifiant);
-    } else {
-      console.error("Erreur");
-      error = true;
-
-      setTimeout(() => {
-        error = false;
-      }, 1000);
+    } catch (error) {
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   };
 
   // code mise a jour arrondissement
   const handleSubmit2 = async (event) => {
-    event.preventDefault();
-    let formdata = new FormData();
-    formdata.append("nom", noms);
-    formdata.append("code", codes);
-    formdata.append("region", region);
+    try {
+      event.preventDefault();
+      let formdata = new FormData();
+      formdata.append("nom", noms);
+      formdata.append("code", codes);
+      formdata.append("region", region);
 
-    let response;
-    response = await fetch(
-      "https://bloodjens.pythonanywhere.com/updateDistrict/" + ids,
-      {
-        method: "POST",
-        body: formdata,
+      let response;
+      response = await fetch(
+        "https://bloodjens.pythonanywhere.com/updateDistrict/" + ids,
+        {
+          method: "POST",
+          body: formdata,
+        }
+      );
+
+      const data = await response.json();
+      const message = data.message;
+      console.log(message);
+      fetchUtilisateur();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // Pour un défilement en douceur
+      });
+      if (message) {
+        noms = "";
+        modif = false;
+        toast.success("Une district a été mi a jour", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
+        // sessionStorage.setItem("identifiant", identifiant);
+      } else {
+        toast.error("Erreur de serveur", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
       }
-    );
-
-    const data = await response.json();
-    const message = data.message;
-    console.log(message);
-    fetchUtilisateur();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Pour un défilement en douceur
-    });
-    if (message) {
-      noms = "";
-      modif = false;
-
-      // sessionStorage.setItem("identifiant", identifiant);
-    } else {
-      setTimeout(() => {
-        error = false;
-      }, 1000);
+    } catch (error) {
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   };
   async function fetchregion() {
@@ -151,10 +178,10 @@
       const data = await response.json();
       regions = data.data;
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des arrondissements:",
-        error
-      );
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -263,7 +290,7 @@
     </div>
   </Modal>
 {/if}
-
+<Toaster />
 <center style="display: flex; gap: 30px;">
   <h2>Liste des districts à Madagascar</h2>
   <Motion let:motion whileHover={{ rotate: "5deg", scale: 1.1 }}>

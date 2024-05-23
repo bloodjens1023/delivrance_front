@@ -8,6 +8,7 @@
   import HeaderAdmin from "../../../Components/HeaderAdmin.svelte";
   import Chargement from "../../../Components/Chargement.svelte";
   import ChargementConnect from "../../../Components/ChargementConnect.svelte";
+  import toast, { Toaster } from "svelte-french-toast";
 
   let visible = false;
 
@@ -28,68 +29,54 @@
 
   async function handleSubmit() {
     loading = true;
-    const response = await fetch(
-      "https://bloodjens.pythonanywhere.com/api_connexionChef/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email, password }),
+    try {
+      const response = await fetch(
+        "https://bloodjens.pythonanywhere.com/api_connexionChef/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email, password }),
+        }
+      );
+
+      const data = await response.json();
+      const message = data.message;
+      info = data.info;
+      console.log(message);
+
+      if (message) {
+        console.log("utilisateur inserer");
+        // Redirection ou autre action après la création réussie
+
+        toast.success("Connexion réussite", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
+        loading = false;
+        sessionStorage.setItem("chef", email);
+
+        goto("/Chef/AccueilAdmin");
+      } else {
+        console.error("Erreur");
+        toast.error("Erreur de connexion", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
+        loading = false;
       }
-    );
-
-    const data = await response.json();
-    const message = data.message;
-    info = data.info;
-    console.log(message);
-
-    if (message) {
-      console.log("utilisateur inserer");
-      // Redirection ou autre action après la création réussie
-
-      success = true;
-      setTimeout(() => {
-        success = false;
-      }, 1000);
-      loading = false;
-      sessionStorage.setItem("chef", email);
-
-      goto("/Chef/AccueilAdmin");
-    } else {
-      console.error("Erreur");
-      error = true;
-
-      setTimeout(() => {
-        error = false;
-      }, 1000);
+    } catch (error) {
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
       loading = false;
     }
   }
 </script>
 
-{#if error}
-  <div
-    class="alert alert-danger d-flex align-items-center"
-    role="alert"
-    style="position: fixed; bottom: 0; left: 20px"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-exclamation-circle-fill"
-      viewBox="0 0 16 16"
-      style="margin-right: 10px;"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-      />
-    </svg>
-    <div>Erreur de connexion</div>
-  </div>
-{/if}
+<Toaster />
 <div>
   <HeaderAdmin />
   <br />

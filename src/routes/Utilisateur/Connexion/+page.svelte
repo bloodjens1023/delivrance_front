@@ -27,49 +27,53 @@
 
   async function handleSubmit() {
     loading = true;
-    const response = await fetch(
-      "https://bloodjens.pythonanywhere.com/api_connexion/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ identifiant, password }),
-      }
-    );
+    try {
+      const response = await fetch(
+        "https://bloodjens.pythonanywhere.com/api_connexion/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ identifiant, password }),
+        }
+      );
 
-    const data = await response.json();
-    const message = data.message;
-    info = data.info;
-    console.log(message);
+      const data = await response.json();
+      const message = data.message;
+      info = data.info;
+      console.log(message);
 
-    if (message) {
-      console.log("utilisateur inserer");
-      // Redirection ou autre action après la création réussie
+      if (message) {
+        console.log("utilisateur inserer");
+        // Redirection ou autre action après la création réussie
 
-      toast.success("Connexion réussite", {
-        style: "font-size:15px; padding:10px",
-        duration: 2000,
-      });
+        toast.success("Connexion réussite", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
 
-      loading = false;
+        loading = false;
 
-      if (identifiant == "admin") {
-        sessionStorage.setItem("admin", identifiant);
-        goto("/SuperAdmin/HomeSuperAdmin");
+        if (identifiant == "admin") {
+          sessionStorage.setItem("admin", identifiant);
+          goto("/SuperAdmin/HomeSuperAdmin");
+        } else {
+          sessionStorage.setItem("identifiant", identifiant);
+          goto("/Utilisateur/Attente");
+        }
       } else {
-        sessionStorage.setItem("identifiant", identifiant);
-        goto("/Utilisateur/Attente");
+        toast.error("Erreur de connexion", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
+        loading = false;
       }
-    } else {
-      toast.error("Erreur de connexion", {
+    } catch (error) {
+      toast.error("Erreur de serveur", {
         style: "font-size:15px; padding:10px",
         duration: 2000,
       });
-
-      setTimeout(() => {
-        error = false;
-      }, 1000);
       loading = false;
     }
   }

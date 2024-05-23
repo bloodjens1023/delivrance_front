@@ -9,6 +9,7 @@
   import Footer from "../../../Components/Footer.svelte";
   import Chargement from "../../../Components/Chargement.svelte";
   import ChargementConnect from "../../../Components/ChargementConnect.svelte";
+  import toast, { Toaster } from "svelte-french-toast";
 
   let visible = false;
 
@@ -27,53 +28,55 @@
   let arrond = 1;
   let region = 1;
   let district = 1;
-  let success = false;
-  let error = false;
   let loading = false;
 
   async function handleSubmit() {
-    console.log(arrond);
     loading = true;
-    const response = await fetch(
-      "https://bloodjens.pythonanywhere.com/api_inscriptionChef/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          nom,
-          prenom,
-          email,
-          numCni,
-          tel,
-          arrond,
-          password,
-        }),
+    try {
+      const response = await fetch(
+        "https://bloodjens.pythonanywhere.com/api_inscriptionChef/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            nom,
+            prenom,
+            email,
+            numCni,
+            tel,
+            arrond,
+            password,
+          }),
+        }
+      );
+
+      const data = await response.json();
+      const message = data.message;
+      info = data.info;
+      console.log(message);
+
+      if (message) {
+        // Redirection ou autre action après la création réussie
+        loading = false;
+        toast.success("Connexion réussite", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
+        goto("/Chef/AccueilAdmin");
+        sessionStorage.setItem("chef", email);
+      } else {
+        toast.error("Mots de passe ou email incorrecte", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
       }
-    );
-
-    const data = await response.json();
-    const message = data.message;
-    info = data.info;
-    console.log(message);
-
-    if (message) {
-      // Redirection ou autre action après la création réussie
-      loading = false;
-      success = true;
-      setTimeout(() => {
-        success = false;
-      }, 1000);
-      goto("/Chef/AccueilAdmin");
-      sessionStorage.setItem("chef", email);
-    } else {
-      console.error("Erreur");
-      error = true;
-      loading = false;
-      setTimeout(() => {
-        error = false;
-      }, 1000);
+    } catch (error) {
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -92,10 +95,10 @@
       arrondissements = data.data;
       arrond = "";
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des arrondissements:",
-        error
-      );
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
   async function fetchregion() {
@@ -108,10 +111,10 @@
       regions = data.data;
       arrond = "";
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des arrondissements:",
-        error
-      );
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -125,10 +128,10 @@
       districts = data.data;
       arrond = "";
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des arrondissements:",
-        error
-      );
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -142,88 +145,30 @@
 
   let post = [];
   const getPosts = async () => {
-    const res = await fetch(
-      "https://bloodjens.pythonanywhere.com/api_codeVerif/"
-    );
+    try {
+      const res = await fetch(
+        "https://bloodjens.pythonanywhere.com/api_codeVerif/"
+      );
 
-    const data = await res.json();
-    const filter = data.data;
-    return filter;
+      const data = await res.json();
+      const filter = data.data;
+      return filter;
+    } catch (error) {
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
+      return null;
+    }
   };
 </script>
 
-{#if success}
-  <div
-    class="alert alert-success"
-    role="alert"
-    style="position: fixed; bottom: 0; left: 20px"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-check-circle-fill"
-      viewBox="0 0 16 16"
-      style="margin-right: 10px;"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0m-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z"
-      />
-    </svg>
-    Code Accepté
-  </div>
-{/if}
-
-{#if error}
-  <div
-    class="alert alert-danger d-flex align-items-center"
-    role="alert"
-    style="position: fixed; bottom: 0; left: 20px"
-  >
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="16"
-      height="16"
-      fill="currentColor"
-      class="bi bi-exclamation-circle-fill"
-      viewBox="0 0 16 16"
-      style="margin-right: 10px;"
-    >
-      <path
-        d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-      />
-    </svg>
-    <div>Erreur de code</div>
-  </div>
-{/if}
+<Toaster />
 <div>
   <HeaderAdmin />
   <br />
   <br />
   {#if verifier}
-    {#if error}
-      <div
-        class="alert alert-danger d-flex align-items-center"
-        role="alert"
-        style="position: fixed; bottom: 0; left: 20px"
-      >
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          width="16"
-          height="16"
-          fill="currentColor"
-          class="bi bi-exclamation-circle-fill"
-          viewBox="0 0 16 16"
-          style="margin-right: 10px;"
-        >
-          <path
-            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"
-          />
-        </svg>
-        <div>{info}</div>
-      </div>
-    {/if}
     <div>
       <center transition:blur={{ duration: 500 }}>
         <h1 class="mb-5" style="font-weight: bold;">Inscrivez-vous</h1>
@@ -416,16 +361,16 @@
             post = await getPosts();
             console.log(post[0]["code"]);
             if (val == post[0]["code"]) {
-              success = true;
-              setTimeout(() => {
-                success = false;
-              }, 2000);
+              toast.success("code accepté", {
+                style: "font-size:15px; padding:10px",
+                duration: 2000,
+              });
               verifier = true;
             } else {
-              error = true;
-              setTimeout(() => {
-                error = false;
-              }, 2000);
+              toast.error("Erreur de code", {
+                style: "font-size:15px; padding:10px",
+                duration: 2000,
+              });
             }
           }}>verifier moi</button
         >

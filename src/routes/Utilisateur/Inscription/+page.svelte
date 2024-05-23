@@ -33,32 +33,39 @@
 
   async function handleSubmit() {
     loading = true;
-    const response = await fetch(
-      "https://bloodjens.pythonanywhere.com/api_inscription/",
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ identifiant, email, tel, arrond, password }),
+    try {
+      const response = await fetch(
+        "https://bloodjens.pythonanywhere.com/api_inscription/",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ identifiant, email, tel, arrond, password }),
+        }
+      );
+
+      const data = await response.json();
+      const message = data.message;
+      info = data.info;
+
+      if (message) {
+        toast.success("Inscription réussite", {
+          style: "font-size:20px; padding:10px",
+        });
+        loading = false;
+
+        sessionStorage.setItem("identifiant", identifiant);
+        goto("/Utilisateur/Step");
+      } else {
+        toast.error("Erreur de l'inscription", {
+          style: "font-size:20px; padding:10px",
+        });
+        loading = false;
       }
-    );
-
-    const data = await response.json();
-    const message = data.message;
-    info = data.info;
-
-    if (message) {
-      toast.success("Inscription réussite", {
-        style: "font-size:20px; padding:10px",
-      });
-      loading = false;
-
-      sessionStorage.setItem("identifiant", identifiant);
-      goto("/Utilisateur/Step");
-    } else {
-      toast.error("Erreur de l'inscription", {
-        style: "font-size:20px; padding:10px",
+    } catch (error) {
+      toast.error("Erreur du serveur", {
+        style: "font-size:15px; padding:10px",
       });
       loading = false;
     }
@@ -79,7 +86,7 @@
       arrond = "";
     } catch (error) {
       toast.error("Erreur du serveur", {
-        style: "font-size:20px; padding:10px",
+        style: "font-size:15px; padding:10px",
       });
     }
   }
@@ -94,7 +101,7 @@
       arrond = "";
     } catch (error) {
       toast.error("Erreur du serveur", {
-        style: "font-size:20px; padding:10px",
+        style: "font-size:15px; padding:10px",
       });
     }
   }
@@ -110,7 +117,7 @@
       arrond = "";
     } catch (error) {
       toast.error("Erreur du serveur", {
-        style: "font-size:20px; padding:10px",
+        style: "font-size:15px; padding:10px",
       });
     }
   }

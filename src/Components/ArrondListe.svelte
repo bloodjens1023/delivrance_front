@@ -6,6 +6,7 @@
   import Modal from "./Modal.svelte";
   import Chargement from "./Chargement.svelte";
   import ChargementConnect from "./ChargementConnect.svelte";
+  import toast from "svelte-french-toast";
 
   let showModal = false;
   let suppr = "";
@@ -31,8 +32,16 @@
       users = [];
       fetchUtilisateur();
       suppr = "";
+      toast.success("arrondissement supprimer", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
       return true;
     } else {
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
       return false;
     }
   };
@@ -50,7 +59,10 @@
       totalPages = Math.ceil(filtrer.length / itemsPerPage);
       actuel = getCurrentPageData();
     } catch (error) {
-      console.error("Erreur lors de la récupération des Utilisateur:", error);
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -91,57 +103,63 @@
       behavior: "smooth", // Pour un défilement en douceur
     });
     if (message) {
-      success = true;
-      setTimeout(() => {
-        success = false;
-      }, 1000);
+      toast.success("Un arrondissement a été ajouté", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
       noms = "";
 
       // sessionStorage.setItem("identifiant", identifiant);
     } else {
-      console.error("Erreur");
-      error = true;
-
-      setTimeout(() => {
-        error = false;
-      }, 1000);
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   };
 
   // code mise a jour arrondissement
   const handleSubmit2 = async (event) => {
-    event.preventDefault();
-    let formdata = new FormData();
-    formdata.append("nom", noms);
-    formdata.append("code", codes);
-    formdata.append("district", region);
+    try {
+      event.preventDefault();
+      let formdata = new FormData();
+      formdata.append("nom", noms);
+      formdata.append("code", codes);
+      formdata.append("district", region);
 
-    let response;
-    response = await fetch(
-      "https://bloodjens.pythonanywhere.com/updateArrondissement/" + ids,
-      {
-        method: "POST",
-        body: formdata,
+      let response;
+      response = await fetch(
+        "https://bloodjens.pythonanywhere.com/updateArrondissement/" + ids,
+        {
+          method: "POST",
+          body: formdata,
+        }
+      );
+
+      const data = await response.json();
+      const message = data.message;
+      console.log(message);
+      fetchUtilisateur();
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth", // Pour un défilement en douceur
+      });
+      if (message) {
+        noms = "";
+        modif = false;
+
+        // sessionStorage.setItem("identifiant", identifiant);
+      } else {
+        toast.error("Erreur de serveur", {
+          style: "font-size:15px; padding:10px",
+          duration: 2000,
+        });
       }
-    );
-
-    const data = await response.json();
-    const message = data.message;
-    console.log(message);
-    fetchUtilisateur();
-    window.scrollTo({
-      top: 0,
-      behavior: "smooth", // Pour un défilement en douceur
-    });
-    if (message) {
-      noms = "";
-      modif = false;
-
-      // sessionStorage.setItem("identifiant", identifiant);
-    } else {
-      setTimeout(() => {
-        error = false;
-      }, 1000);
+    } catch (error) {
+      toast.success("Arrondissement mis à jour", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   };
   async function fetchregion() {
@@ -152,10 +170,10 @@
       const data = await response.json();
       regions = data.data;
     } catch (error) {
-      console.error(
-        "Erreur lors de la récupération des arrondissements:",
-        error
-      );
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -707,7 +725,6 @@
   }
 
   @media screen and (max-width: 600px) {
-
     table {
       border: 0;
     }

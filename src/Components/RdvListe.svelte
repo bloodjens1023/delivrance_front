@@ -4,6 +4,7 @@
   import { onDestroy, onMount } from "svelte";
   import { Motion } from "svelte-motion";
   import Modal from "./Modal.svelte";
+  import toast, { Toaster } from "svelte-french-toast";
 
   let showModal = false;
   let suppr = "";
@@ -51,7 +52,10 @@
       totalPages = Math.ceil(filtrer.length / itemsPerPage);
       actuel = getCurrentPageData();
     } catch (error) {
-      console.error("Erreur lors de la récupération des Utilisateur:", error);
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -75,7 +79,6 @@
     let response;
     response = fetch("https://bloodjens.pythonanywhere.com/updateRdv/" + ids);
 
-    console.log(response);
     // const data = await response.json();
     // const message = data.data;
     // console.log(message);
@@ -88,12 +91,16 @@
     if (message) {
       noms = "";
       modif = false;
-
+      toast.success("CNI récuperé", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
       // sessionStorage.setItem("identifiant", identifiant);
     } else {
-      setTimeout(() => {
-        console.log("erreur");
-      }, 1000);
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   };
 
@@ -201,7 +208,7 @@
     </div>
   </Modal>
 {/if}
-
+<Toaster />
 <center style="display: flex; gap: 30px;">
   <h2>Liste des CNI non récuperer</h2>
 </center>

@@ -3,6 +3,7 @@
   import { onDestroy, onMount } from "svelte";
   import { Motion } from "svelte-motion";
   import Modal from "./Modal.svelte";
+  import toast, { Toaster } from "svelte-french-toast";
 
   function filter(a) {
     return "https://bloodjens.pythonanywhere.com/" + a;
@@ -45,12 +46,15 @@
       if (contenu.length == 0) {
         nuller = true;
       }
+      toast.success("La demande a été refuser", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     } catch (error) {
-      setTimeout(() => {
-        error = true;
-      }, 2000);
-      error = false;
-      console.error("Erreur lors de la récupération des demandes:", error);
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -96,12 +100,15 @@
       if (contenu.length == 0) {
         nuller = true;
       }
+      toast.success("Demande accepté", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     } catch (error) {
-      setTimeout(() => {
-        error = true;
-      }, 2000);
-      error = false;
-      console.error("Erreur lors de la récupération des demandes:", error);
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -116,14 +123,11 @@
           body: formdata,
         }
       );
-      // const data = await response.json();
-      // co = data.data; // Supposons que 'data' est le nom de la clé qui contient les Utilidateur dans la réponse JSON
-      // if (contenu.length == 0) {
-      //   nuller = true;
-      // }
     } catch (error) {
-      error = false;
-      console.error("Erreur lors de la récupération des demandes:", error);
+      toast.error("Erreur de serveur", {
+        style: "font-size:15px; padding:10px",
+        duration: 2000,
+      });
     }
   }
 
@@ -136,6 +140,7 @@
   });
 </script>
 
+<Toaster />
 {#if showModal}
   <Modal bind:showModal>
     <h2 slot="header">⚠ Attention !</h2>
